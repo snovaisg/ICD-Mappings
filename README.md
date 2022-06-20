@@ -1,8 +1,8 @@
 # ICD-Codes-Grouper
  
-This repo allows you to convert from ICD9 to any of the following encodings: **ccs**, **icd9_level_3**, **icd9_chapters**,**cci** 
+The class **ICDCodesGrouper** allows you to convert from ICD9 to several other coding schemas with just one line of code.
 
-# Sources
+# Current Coding Schema available
 
 [CCS](https://www.hcup-us.ahrq.gov/toolssoftware/ccs/ccs.jsp) aggregates all icd9 codes into just 272 diagnostic groups.
 
@@ -14,6 +14,8 @@ This repo allows you to convert from ICD9 to any of the following encodings: **c
 
 
 # Usage
+
+**Playground.ipynb** contains a toy usage of the ICDCodesGrouper class, but we will also leave here an independent example:
 
 ```python
 # imports
