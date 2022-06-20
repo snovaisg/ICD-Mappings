@@ -1,0 +1,20 @@
+Chapter,Code Range,Description
+1,001-139,Doenças infecciosas e parasitárias
+2,140-239,Neoplasias
+3,240-279,"Doenças Endócrinas, Nutricionais, Metabólicas e da Imunidade"
+4,280-289,Doenças do Sangue e dos Órgãos Hematopoiéticos
+5,290-319,Doenças Mentais
+6,320-389,Doenças do Sistema Nervoso e dos Órgãos dos Sentidos
+7,390-459,Doenças do Aparelho Circulatório
+8,460-519,Doenças do Aparelho Respiratório
+9,520-579,Doenças do Aparelho Digestivo
+10,580-629,Doenças do Aparelho Geniturinário
+11,630-679,"Complicações da Gravidez, do Parto e do Puerpério"
+12,680-709,Doenças da Pele e do Tecido Subcutâneo
+13,710-739,Doenças do Aparelho Osteomuscular e do Tecido Conjuntivo
+14,740-759,Anomalias Congénitas
+15,760-779,Certas Condições originadas no Período Perinatal
+16,780-799,"Sintomas, Sinais e Condições Mal Definidas"
+17,800-999,Lesões e Intoxicações
+18,V01-V91,Classificação suplementar de fatores que influenciam a saúde e o contacto com os serviços de saúde
+19,E000-E999,Classificação suplementar de causas externas de lesões e Intoxicações
