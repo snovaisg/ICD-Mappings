@@ -8,7 +8,7 @@ The class **ICDCodesGrouper** allows you to convert from ICD9 to several other c
 
 [ICD9 Chapters](https://icd.codes/icd9cm) aggregates all icd9 codes into just 19 chapters.
 
-**ICD9 level 3** is the 3rd level of the hierarchy of any ICD9 code (first 3 digits).
+**ICD9 level 3** is the 3rd level of the hierarchy of any ICD9 code (first 3 digits). So it also reduces granuality by a lot.
 
 [CCI](https://www.hcup-us.ahrq.gov/toolssoftware/chronic/chronic.jsp) classifies each icd9 code into Chronic vs Non-chronic condition.
 
