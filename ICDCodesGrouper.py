@@ -20,9 +20,12 @@ class ICDCodesGrouper(object):
     
     >>> codes = pd.Series([5849,E8497,2720])
     
-    >>> grouper = ICDCodesGrouper(ccs_path,icd9_chapter_path)
+    >>> grouper = ICDCodesGrouper(ccs_path=<ccs_path>,
+                                  icd9_chapter_path=<icd9_chapter_path>,
+                                  cci_path=<cci_path>
+                                  )
     >>> grouper.check_avaliable_groupers()
-    ['ccs', 'icd9chapters']
+    ['ccs', 'icd9chapters','icd9_level3','cci']
     
     >>> grouper.lookup('ccs',codes)
     0     157
