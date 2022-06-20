@@ -26,7 +26,7 @@ codes_grouper = ICDCodesGrouper(ccs_path='grouper_data/CCS-SingleDiagnosisGroupe
                                 cci_path='grouper_data/cci2015.csv'
                                )
 
-# usage (let's do icd9 to ccs)
+# let's do icd9 to ccs
 icd9_codes = ["29410","5362","34290","3669"]
 data = pd.DataFrame(icd9_codes,columns=['ICD9_CODE'])
 
@@ -46,7 +46,7 @@ data
 >>> 2     34290   82
 >>> 3      3669   86
 
-# Now for all available groups
+# Now let's do all available groups
 groups = codes_grouper.get_available_groupers()
 
 for g in groups:
