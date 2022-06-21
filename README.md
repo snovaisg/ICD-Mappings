@@ -1,6 +1,6 @@
 # ICD-Mappings
  
-The class **ICDMappings** maps with a couple lines of code:
+The class **ICDMappings** maps:
 - icd9 to icd10;
 - icd10 to icd9;
 - icd9 to CCS;
