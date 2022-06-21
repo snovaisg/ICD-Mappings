@@ -22,17 +22,17 @@ class ICDMappings(object):
     >>> codes = pd.Series([5849,E8497,2720])
     
     >>> icdmapping = ICDMappings() # uses default filepaths of the mappings
-    
+
     >>> icdmapping.check_avaliable_groupers()
-    ['ccs', 'icd9chapters','icd9_level3','cci']
+    ['icd9to10','icd10to9','icd9toccs', 'icd9tochapter','icd9_level3','icd9tocci']
     
-    >>> icdmapping.lookup('ccs',codes)
+    >>> icdmapping.lookup('icd9toccs',codes)
     0     157
     1    2621
     2      53
     dtype: int64
     
-    >>> icdmapping.lookup('icd9chapters',codes)
+    >>> icdmapping.lookup('icd9tochapter',codes)
     0    10
     1    19
     2     3
