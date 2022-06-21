@@ -1,8 +1,13 @@
 # ICD-Mappings
  
-The class **ICDMappings** maps between icd9 and 10 as well as maps between icd9 and ccs and also maps icd9 to chronic vs non-chronic condition through the Chronic Condition Indicator (cci).
+The class **ICDMappings** maps with a couple lines of code:
+- icd9 to icd10;
+- icd10 to icd9;
+- icd9 to CCS;
+- icd9 to icd9 chapters;
+- icd9 to chronic vs not-chronic;
 
-And it does all of this with just one line of code!
+Supports mapping either a `single code` at a time, or a `pandas series` of codes!
 
 # Current Supported Mappings
 
@@ -14,7 +19,7 @@ And it does all of this with just one line of code!
 
 **ICD9 level 3** is the 3rd level of the hierarchy of any ICD9 code (first 3 digits). So it also reduces granuality by a lot.
 
-[CCI](https://www.hcup-us.ahrq.gov/toolssoftware/chronic/chronic.jsp) classifies each icd9 code into Chronic vs Non-chronic condition.
+[CCI](https://www.hcup-us.ahrq.gov/toolssoftware/chronic/chronic.jsp) classifies each icd9 code into Chronic vs Not-chronic condition.
 
 
 # Usage
