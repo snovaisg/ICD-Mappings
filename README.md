@@ -19,7 +19,7 @@ And it does all of this with just one line of code!
 
 # Usage
 
-**Playground.ipynb** contains a toy usage of the ICDCodesGrouper class, but we will also leave here an independent example:
+**Playground.ipynb** contains a toy usage of the ICDMappings class, but we will also leave here an independent example:
 
 ```python
 # imports
