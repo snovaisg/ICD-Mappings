@@ -19,7 +19,7 @@ class ICDMappings(object):
     Examples
     --------
     
-    >>> codes = pd.Series([5849,E8497,2720])
+    >>> codes = pd.Series(['5849','E8497','2720'])
     
     >>> icdmapping = ICDMappings() # uses default filepaths of the mappings
 
