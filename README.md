@@ -66,3 +66,7 @@ data
 >>> 2     34290   82  G8190
 >>> 3      3669   86  H269
 ```
+
+# Acknowledgments
+
+[Tekaichi](https://github.com/Tekaichi) for building the icd9->ccs pipeline
