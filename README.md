@@ -53,7 +53,6 @@ data
 >>> 3      3669   86
 
 # now icd9 to icd10
-
 data['ICD10'] = icdmap.icd9to10.lookup(data['ICD9_CODE'])
 data
 >>>   ICD9_CODE  ccs  ICD10
