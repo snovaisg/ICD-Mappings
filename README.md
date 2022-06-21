@@ -1,4 +1,4 @@
-# ICD-Mappings
+# ICDMappings
  
 The class **ICDMappings** maps:
 - icd9 to icd10;
