@@ -3,16 +3,17 @@ import pandas as pd
 import numpy as np
 import re
 
-class ICDCodesGrouper(object):
+class ICDMappings(object):
     """
-    Class containing several icd9 grouping subclasses.
-    all grouper subclasses implement the method "lookup".
+    This Class containing several icd mappings subclasses that allow conversion between icd9->10 and vice-versa, icd9->ccs, etc..
+    
+    all subclasses implement the method "lookup" which maps the corresponding code to the target coding.
     
     <lookup> can accept as input:
-    1- a single icd9 code as string
-    2- a pd.Series of icd9 codes
+    1- a single code as a string
+    2- a pd.Series of codes
     
-    and outputs a mapping to the corresponding icd9 group.
+    and outputs a mapping to the corresponding target coding.
     
     
     Examples
@@ -20,27 +21,30 @@ class ICDCodesGrouper(object):
     
     >>> codes = pd.Series([5849,E8497,2720])
     
-    >>> grouper = ICDCodesGrouper(ccs_path=<ccs_path>,
-                                  icd9_chapter_path=<icd9_chapter_path>,
-                                  cci_path=<cci_path>
-                                  )
-    >>> grouper.check_avaliable_groupers()
+    >>> icdmapping = ICDMappings() # uses default filepaths of the mappings
+    
+    >>> icdmapping.check_avaliable_groupers()
     ['ccs', 'icd9chapters','icd9_level3','cci']
     
-    >>> grouper.lookup('ccs',codes)
+    >>> icdmapping.lookup('ccs',codes)
     0     157
     1    2621
     2      53
     dtype: int64
     
-    >>> grouper.lookup('icd9chapters',codes)
+    >>> icdmapping.lookup('icd9chapters',codes)
     0    10
     1    19
     2     3
     dtype: int64
     """
     
-    def __init__(self, ccs_path, icd9_chapter_path, cci_path):
+    def __init__(self, 
+                 icd9toccs_path=None, 
+                 icd10to9_path=None, 
+                 icd9to10_path=None, 
+                 icd9tochapter_path=None, 
+                 icd9tocci_path=None):
         """
         Parameters
         ----------
@@ -49,15 +53,33 @@ class ICDCodesGrouper(object):
             contains auxiliary data paths of grouping methods
         """
         
-        self.ccs = self.CCSSingleDiagnosis(ccs_path)
-        self.icd9chapters = self.ICD9_CM_Chapters(icd9_chapter_path)
-        self.icd9_level3 = self.ICD9_LEVEL3()
-        self.cci = self.CCI(cci_path)
+        # default paths in case they aren't specified in init
+        self.default_icd9toccs_path= 'icd_mappings/CCS-SingleDiagnosisGrouper.txt'
+        self.default_icd9tochapter_path = 'icd_mappings/icd9-CM-code-chapter-en=PT.csv'
+        self.default_icd9to10_path = 'icd_mappings/icd9toicd10cmgem.csv'
+        self.default_icd10to9_path = 'icd_mappings/icd10cmtoicd9gem.csv'
+        self.default_icd9tocci_path = 'icd_mappings/cci2015.csv'
         
-        self.groupers = {'ccs':self.ccs,
-                         'icd9chapters':self.icd9chapters,
+        icd9toccs_path = self.default_icd9toccs_path if icd9toccs_path is None else icd9toccs_path
+        icd9to10_path = self.default_icd9to10_path if icd9to10_path is None else icd9to10_path
+        icd10to9_path = self.default_icd10to9_path if icd10to9_path is None else icd10to9_path
+        icd9tochapter_path = self.default_icd9tochapter_path if icd9tochapter_path is None else icd9tochapter_path
+        icd9tocci_path = self.default_icd9tocci_path if icd9tocci_path is None else icd9tocci_path
+        
+        # init converter classes
+        self.icd9toccs = self.ICD9toCCS(icd9toccs_path)
+        self.icd9to10 = self.ICD9to10(icd9to10_path)
+        self.icd10to9 = self.ICD10to9(icd10to9_path)
+        self.icd9tochapter = self.ICD9toChapters(icd9tochapter_path)
+        self.icd9_level3 = self.ICD9_LEVEL3()
+        self.icd9tocci = self.ICD9toCCI(icd9tocci_path)
+        
+        self.groupers = {'icd9toccs':self.icd9toccs,
+                         'icd9to10':self.icd9to10,
+                         'icd10to9':self.icd10to9,
+                         'icd9tochapter':self.icd9tochapter,
                          'icd9_level3':self.icd9_level3,
-                         'cci':self.cci}
+                         'icd9tocci':self.icd9tocci}
     
     def get_available_groupers(self):
         return [i for i in self.groupers]
@@ -97,14 +119,12 @@ class ICDCodesGrouper(object):
             return code_level3
                 
     
-    class CCSSingleDiagnosis:
+    class ICD9toCCS:
         """
         Maps icd9 codes to CCS groups
         """
-        def __init__(self,file = None):
+        def __init__(self,file):
 
-            if file is None:
-                file = 'CCS-SingleDiagnosisGrouper.txt'
             file = open(file,"r")
             content = file.read()
             file.close()
@@ -144,9 +164,9 @@ class ICDCodesGrouper(object):
             else:
                 raise ValueError(f'Wrong input type. Expecting str or pd.Series. Got {type(code)}')
                 
-    class CCI:
-        def __init__(self,cci_path):
-            self.cci_path = cci_path
+    class ICD9toCCI:
+        def __init__(self,icd9tocci_path):
+            self.icd9tocci_path = icd9tocci_path
 
             self.data = self._read_and_process()
             self._lookup_table = self.data.set_index('ICD-9-CM CODE')['CHRONIC'].to_dict()
@@ -181,7 +201,7 @@ class ICDCodesGrouper(object):
 
 
         def _read_and_process(self):
-            df = pd.read_csv('grouper_data/cci2015.csv',usecols=[0,2])
+            df = pd.read_csv(self.icd9tocci_path,usecols=[0,2])
             df.columns = [col.replace("'","") for col in df.columns]
             df['ICD-9-CM CODE'] = df['ICD-9-CM CODE'].str.replace("'","").str.strip()
             df['CATEGORY DESCRIPTION'] = df['CATEGORY DESCRIPTION'].str.replace("'","").str.strip()
@@ -190,13 +210,13 @@ class ICDCodesGrouper(object):
 
             return df
         
-    class ICD9_CM_Chapters:
+    class ICD9toChapters:
         """
         Maps icd9 codes to icd9 chapters
         """
-        def __init__(self,filepath):
+        def __init__(self,icd9toChapters_path):
             # creates self.chapters_num & self.chapters_char & self.bins
-            self.__preprocess_chapters(filepath)
+            self.__preprocess_chapters(icd9toChapters_path)
 
         def lookup(self,code):
             """
@@ -313,3 +333,92 @@ class ICDCodesGrouper(object):
             self.bins = bins
             self.chapters_num = chapters_num
             self.chapters_char = chapters_char
+    
+    class ICD10to9:
+        """
+        Mapping taken from: https://www.nber.org/research/data/icd-9-cm-and-icd-10-cm-and-icd-10-pcs-crosswalk-or-general-equivalence-mappings
+        """
+        def __init__(self, icd10to9_path):
+            self.icd10to9_path = icd10to9_path
+
+            self.data = self._read_and_process()
+            self._lookup_table = self.data.set_index('icd10cm')['icd9cm'].to_dict()
+
+        def lookup(self,code):
+                    """
+                    Given an icd10 code, returns the corresponding icd9 code.
+
+                    Parameters
+                    ----------
+
+                    code : str | pd.Series
+                        icd10 code
+
+                    Returns:
+                        icd9 code or np.nan when the mapping is not possible
+                    """
+                    def lookup_single(code : str):
+                        try:
+                            return self._lookup_table[code]
+                        except:
+                            return np.nan
+                    if type(code) == pd.Series:
+                        return code.apply(lookup_single)
+                    elif type(code) == 'str':
+                        return lookup_single(code)
+                    else:
+                        raise ValueError(f'Wrong input type. Expecting str or pd.Series. Got {type(code)}')    
+
+
+        def _read_and_process(self):
+            df = pd.read_csv(self.icd10to9_path)
+
+            df.loc[df.no_map == 1,'icd9cm'] = np.nan
+
+            return df
+
+
+
+
+    class ICD9to10:
+        """
+        Mapping taken from: https://www.nber.org/research/data/icd-9-cm-and-icd-10-cm-and-icd-10-pcs-crosswalk-or-general-equivalence-mappings
+        """
+        def __init__(self, icd9to10_path):
+            self.icd9to10_path = icd9to10_path
+
+            self.data = self._read_and_process()
+            self._lookup_table = self.data.set_index('icd9cm')['icd10cm'].to_dict()
+
+        def lookup(self,code):
+                    """
+                    Given an icd9 code, returns the corresponding icd10 code.
+
+                    Parameters
+                    ----------
+
+                    code : str | pd.Series
+                        icd9 code
+
+                    Returns:
+                        icd10 code or np.nan when the mapping is not possible
+                    """
+                    def lookup_single(code : str):
+                        try:
+                            return self._lookup_table[code]
+                        except:
+                            return np.nan
+                    if type(code) == pd.Series:
+                        return code.apply(lookup_single)
+                    elif type(code) == 'str':
+                        return lookup_single(code)
+                    else:
+                        raise ValueError(f'Wrong input type. Expecting str or pd.Series. Got {type(code)}')    
+
+
+        def _read_and_process(self):
+            df = pd.read_csv(self.icd9to10_path)
+
+            df.loc[df.no_map == 1,'icd10cm'] = np.nan
+
+            return df
