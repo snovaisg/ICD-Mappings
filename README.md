@@ -49,7 +49,7 @@ icdmap.get_available_groupers()
 >>> ['icd9toccs', 'icd9to10', 'icd10to9', 'icd9tochapter', 'icd9_level3', 'icd9tocci']
 
 # let's do the first one: icd9 to ccs
-data['ccs'] = icdmap.icd9toccs.lookup(data['ICD9_CODE'])
+data['ccs'] = icdmap.lookup('icd9toccs',data['ICD9_CODE'])
 data
 >>>   ICD9_CODE  ccs
 >>> 0     29410  653
@@ -58,7 +58,7 @@ data
 >>> 3      3669   86
 
 # now icd9 to icd10
-data['ICD10'] = icdmap.icd9to10.lookup(data['ICD9_CODE'])
+data['ICD10'] = icdmap.lookup('icd9to10',data['ICD9_CODE'])
 data
 >>>   ICD9_CODE  ccs  ICD10
 >>> 0     29410  653  F0280
