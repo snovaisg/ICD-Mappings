@@ -24,8 +24,6 @@ Supports mapping either a `single code` at a time, or a `pandas series` of codes
 
 # Usage
 
-**Playground.ipynb** contains a toy usage of the ICDMappings class, but we will also leave here an independent example:
-
 ```python
 # imports
 import pandas as pd
