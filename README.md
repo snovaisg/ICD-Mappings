@@ -34,7 +34,7 @@ from ICDMappings import ICDMappings
 # init
 icdmap = ICDMappings()
 
-# get some data
+# create some data of icd9 codes
 icd9_codes = ["29410","5362","34290","3669"]
 data = pd.DataFrame(icd9_codes,columns=['ICD9_CODE'])
 data
