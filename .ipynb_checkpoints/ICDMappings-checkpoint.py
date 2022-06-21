@@ -5,9 +5,9 @@ import re
 
 class ICDMappings(object):
     """
-    This Class containing several icd mappings subclasses that allow conversion between icd9->10 and vice-versa, icd9->ccs, etc..
+    This Class containing several icd mappings subclasses that allow conversion between diagnostic coding schemas.
     
-    all subclasses implement the method "lookup" which maps the corresponding code to the target coding.
+    All subclasses implement the method "lookup" which maps the corresponding code to the target coding.
     
     <lookup> can accept as input:
     1- a single code as a string
@@ -122,6 +122,8 @@ class ICDMappings(object):
     class ICD9toCCS:
         """
         Maps icd9 codes to CCS groups
+        
+        source of mapping: https://www.hcup-us.ahrq.gov/toolssoftware/ccs/ccs.jsp
         """
         def __init__(self,file):
 
@@ -165,6 +167,11 @@ class ICDMappings(object):
                 raise ValueError(f'Wrong input type. Expecting str or pd.Series. Got {type(code)}')
                 
     class ICD9toCCI:
+        """
+        Maps icd9 diagnoses into either chronic vs not-chronic.
+        
+        source of mapping: https://www.hcup-us.ahrq.gov/toolssoftware/chronic/chronic.jsp
+        """
         def __init__(self,icd9tocci_path):
             self.icd9tocci_path = icd9tocci_path
 
@@ -212,7 +219,9 @@ class ICDMappings(object):
         
     class ICD9toChapters:
         """
-        Maps icd9 codes to icd9 chapters
+        Maps icd9 codes to icd9 chapters.
+        
+        source of mapping: https://icd.codes/icd9cm
         """
         def __init__(self,icd9toChapters_path):
             # creates self.chapters_num & self.chapters_char & self.bins
@@ -336,7 +345,10 @@ class ICDMappings(object):
     
     class ICD10to9:
         """
-        Mapping taken from: https://www.nber.org/research/data/icd-9-cm-and-icd-10-cm-and-icd-10-pcs-crosswalk-or-general-equivalence-mappings
+        Maps icd10 codes to icd9.
+        
+        
+        Source of mapping: https://www.nber.org/research/data/icd-9-cm-and-icd-10-cm-and-icd-10-pcs-crosswalk-or-general-equivalence-mappings
         """
         def __init__(self, icd10to9_path):
             self.icd10to9_path = icd10to9_path
@@ -382,7 +394,10 @@ class ICDMappings(object):
 
     class ICD9to10:
         """
-        Mapping taken from: https://www.nber.org/research/data/icd-9-cm-and-icd-10-cm-and-icd-10-pcs-crosswalk-or-general-equivalence-mappings
+        Maps icd9 codes into icd10.
+        
+        
+        Source of mapping: https://www.nber.org/research/data/icd-9-cm-and-icd-10-cm-and-icd-10-pcs-crosswalk-or-general-equivalence-mappings
         """
         def __init__(self, icd9to10_path):
             self.icd9to10_path = icd9to10_path
