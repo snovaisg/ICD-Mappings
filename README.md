@@ -7,7 +7,7 @@ The class **ICDMappings** maps with a couple lines of code:
 - icd9 to icd9 chapters;
 - icd9 to chronic vs not-chronic;
 
-Supports mapping either a `single code` at a time, or a `pandas series` of codes!
+Supports mapping either a `single code` at a time, or a `pandas series` of codes.
 
 # Current Supported Mappings
 
