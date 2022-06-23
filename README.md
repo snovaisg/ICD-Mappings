@@ -6,7 +6,7 @@ The class **ICDMappings** maps:
 - icd9 to CCS;
 - icd9 to icd9 chapters;
 - icd9 to chronic vs not-chronic;
-- icd9 to exists vs not-exists;
+- icd9 checker (checks if a code is in fact icd9);
 
 Supports mapping either a `single code` at a time, or a `pandas series` of codes.
 
