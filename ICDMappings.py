@@ -24,7 +24,7 @@ class ICDMappings(object):
     >>> icdmapping = ICDMappings() # uses default filepaths of the mappings
 
     >>> icdmapping.check_avaliable_groupers()
-    ['icd9to10','icd10to9','icd9toccs', 'icd9tochapter','icd9_level3','icd9tocci']
+    ['icd9to10','icd10to9','icd9toccs', 'icd9tochapter','icd9_level3','icd9tocci', 'icd9exists']
     
     >>> icdmapping.lookup('icd9toccs',codes)
     0     157
@@ -37,6 +37,12 @@ class ICDMappings(object):
     1    19
     2     3
     dtype: int64
+    
+    >>> icdmapping.lookup('icd9exists',codes)
+    0    True
+    1    True
+    2    True
+    dtype: boolean
     """
     
     def __init__(self, 
@@ -44,7 +50,9 @@ class ICDMappings(object):
                  icd10to9_path=None, 
                  icd9to10_path=None, 
                  icd9tochapter_path=None, 
-                 icd9tocci_path=None):
+                 icd9tocci_path=None,
+                 icd9exists_path=None
+                ):
         """
         Parameters
         ----------
@@ -59,12 +67,14 @@ class ICDMappings(object):
         self.default_icd9to10_path = 'icd_mappings/icd9toicd10cmgem.csv'
         self.default_icd10to9_path = 'icd_mappings/icd10cmtoicd9gem.csv'
         self.default_icd9tocci_path = 'icd_mappings/cci2015.csv'
+        self.default_icd9exists_path = 'icd_mappings/icd9dx2015.csv'
         
         icd9toccs_path = self.default_icd9toccs_path if icd9toccs_path is None else icd9toccs_path
         icd9to10_path = self.default_icd9to10_path if icd9to10_path is None else icd9to10_path
         icd10to9_path = self.default_icd10to9_path if icd10to9_path is None else icd10to9_path
         icd9tochapter_path = self.default_icd9tochapter_path if icd9tochapter_path is None else icd9tochapter_path
         icd9tocci_path = self.default_icd9tocci_path if icd9tocci_path is None else icd9tocci_path
+        icd9exists_path = self.default_icd9exists_path if icd9exists_path is None else icd9exists_path
         
         # init converter classes
         self.icd9toccs = self.ICD9toCCS(icd9toccs_path)
@@ -73,13 +83,16 @@ class ICDMappings(object):
         self.icd9tochapter = self.ICD9toChapters(icd9tochapter_path)
         self.icd9_level3 = self.ICD9_LEVEL3()
         self.icd9tocci = self.ICD9toCCI(icd9tocci_path)
+        self.icd9exists = self.ICD9EXISTS(icd9exists_path)
         
         self.groupers = {'icd9toccs':self.icd9toccs,
                          'icd9to10':self.icd9to10,
                          'icd10to9':self.icd10to9,
                          'icd9tochapter':self.icd9tochapter,
                          'icd9_level3':self.icd9_level3,
-                         'icd9tocci':self.icd9tocci}
+                         'icd9tocci':self.icd9tocci,
+                         'icd9exists':self.icd9exists
+                        }
     
     def get_available_groupers(self):
         return [i for i in self.groupers]
@@ -106,7 +119,7 @@ class ICDMappings(object):
         maps icd9 codes to the first 3 levels
         """
         
-        def __init(self):
+        def __init__(self):
             pass
         
         def lookup(self,code):
@@ -117,6 +130,26 @@ class ICDMappings(object):
                 code_level3 = str(code)[:3]
                 assert len(code_level3) == 3,f'Oops. Got {code_level3}'
             return code_level3
+        
+        
+    class ICD9EXISTS:
+        """
+        classifies an icd9 code into if it exists or not.
+        
+        taken from: https://www.nber.org/research/data/icd-9-cm-diagnosis-and-procedure-codes
+        (uses latest version of icd9-cm, aka 2015)
+        """
+        
+        def __init__(self,icd9exists_path):
+            self.data = pd.read_csv(icd9exists_path,index_col=[0])
+        
+        def lookup(self,code):
+            if type(code) == pd.Series:
+                return pd.Series(data=[d in self.data.index for d in code],index=code.index)
+            elif type(code) == str:
+                return d in self.data.index
+            else:
+                raise ValueError('Expecting either a string or a pandas Series of strings. Got ',type(code))
                 
     
     class ICD9toCCS:
