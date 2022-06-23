@@ -1,4 +1,4 @@
-# ICD-Mappings
+# ICDMappings
  
 The class **ICDMappings** maps:
 - icd9 to icd10;
@@ -13,9 +13,9 @@ Supports mapping either a `single code` at a time, or a `pandas series` of codes
 
 [ICD9->10->9](https://www.nber.org/research/data/icd-9-cm-and-icd-10-cm-and-icd-10-pcs-crosswalk-or-general-equivalence-mappings) maps between icd9 and icd10 codes (in both directions).
 
-[CCS](https://www.hcup-us.ahrq.gov/toolssoftware/ccs/ccs.jsp) aggregates all icd9 codes into just 272 diagnostic groups.
+[CCS](https://www.hcup-us.ahrq.gov/toolssoftware/ccs/ccs.jsp) maps icd9 codes into the 272 diagnostic groups of CCS.
 
-[ICD9 Chapters](https://icd.codes/icd9cm) aggregates all icd9 codes into just 19 chapters.
+[ICD9 Chapters](https://icd.codes/icd9cm) maps icd9 codes into the 19 icd9 chapters.
 
 **ICD9 level 3** is the 3rd level of the hierarchy of any ICD9 code (first 3 digits).
 
@@ -33,8 +33,9 @@ from ICDMappings import ICDMappings
 icdmap = ICDMappings()
 
 # create some data of icd9 codes
-icd9_codes = ["29410","5362","34290","3669"]
-data = pd.DataFrame(icd9_codes,columns=['ICD9_CODE'])
+data = pd.DataFrame(data=["29410","5362","34290","3669"],
+                    columns=['ICD9_CODE']
+                   )
 data
 >>>   ICD9_CODE
 >>> 0     29410
