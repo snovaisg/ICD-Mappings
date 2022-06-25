@@ -47,51 +47,55 @@ class ICDMappings(object):
     
     def __init__(self, 
                  icd9toccs_path=None, 
+                 icd9_3toccs_path=None, 
                  icd10to9_path=None, 
                  icd9to10_path=None, 
                  icd9tochapter_path=None, 
                  icd9tocci_path=None,
-                 icd9exists_path=None
+                 icd9checker_path=None
                 ):
         """
         Parameters
         ----------
-        settings : Class
-            Class with filepaths accessible though: settings.ccs_path, settings.icd9_chapter_path, etc..
-            contains auxiliary data paths of grouping methods
+        
+        Paths to filenames with the mappings. If None, uses default.
         """
         
         # default paths in case they aren't specified in init
         self.default_icd9toccs_path= 'icd_mappings/CCS-SingleDiagnosisGrouper.txt'
+        self.default_icd9_3toccs_path = self.default_icd9toccs_path # yes, uses the same file
         self.default_icd9tochapter_path = 'icd_mappings/icd9-CM-code-chapter-en=PT.csv'
         self.default_icd9to10_path = 'icd_mappings/icd9toicd10cmgem.csv'
         self.default_icd10to9_path = 'icd_mappings/icd10cmtoicd9gem.csv'
         self.default_icd9tocci_path = 'icd_mappings/cci2015.csv'
-        self.default_icd9exists_path = 'icd_mappings/icd9dx2015.csv'
+        self.default_icd9checker_path = 'icd_mappings/icd9dx2015.csv'
         
         icd9toccs_path = self.default_icd9toccs_path if icd9toccs_path is None else icd9toccs_path
+        icd9_3toccs_path = self.default_icd9_3toccs_path if icd9_3toccs_path is None else icd9_3toccs_path
         icd9to10_path = self.default_icd9to10_path if icd9to10_path is None else icd9to10_path
         icd10to9_path = self.default_icd10to9_path if icd10to9_path is None else icd10to9_path
         icd9tochapter_path = self.default_icd9tochapter_path if icd9tochapter_path is None else icd9tochapter_path
         icd9tocci_path = self.default_icd9tocci_path if icd9tocci_path is None else icd9tocci_path
-        icd9exists_path = self.default_icd9exists_path if icd9exists_path is None else icd9exists_path
+        icd9checker_path = self.default_icd9checker_path if icd9checker_path is None else icd9checker_path
         
         # init converter classes
         self.icd9toccs = self.ICD9toCCS(icd9toccs_path)
+        self.icd9_3toccs = self.ICD9_3toCCS(icd9_3toccs_path)
         self.icd9to10 = self.ICD9to10(icd9to10_path)
         self.icd10to9 = self.ICD10to9(icd10to9_path)
         self.icd9tochapter = self.ICD9toChapters(icd9tochapter_path)
         self.icd9_level3 = self.ICD9_LEVEL3()
         self.icd9tocci = self.ICD9toCCI(icd9tocci_path)
-        self.icd9exists = self.ICD9EXISTS(icd9exists_path)
+        self.icd9checker = self.ICD9CHECKER(icd9checker_path)
         
         self.groupers = {'icd9toccs':self.icd9toccs,
+                         'icd9_3toccs':self.icd9_3toccs,
                          'icd9to10':self.icd9to10,
                          'icd10to9':self.icd10to9,
                          'icd9tochapter':self.icd9tochapter,
                          'icd9_level3':self.icd9_level3,
                          'icd9tocci':self.icd9tocci,
-                         'icd9exists':self.icd9exists
+                         'icd9checker':self.icd9checker
                         }
     
     def get_available_groupers(self):
@@ -132,16 +136,16 @@ class ICDMappings(object):
             return code_level3
         
         
-    class ICD9EXISTS:
+    class ICD9CHECKER:
         """
-        classifies an icd9 code into if it exists or not.
+        Checks if a code is icd9.
         
         taken from: https://www.nber.org/research/data/icd-9-cm-diagnosis-and-procedure-codes
         (uses latest version of icd9-cm, aka 2015)
         """
         
-        def __init__(self,icd9exists_path):
-            self.data = pd.read_csv(icd9exists_path,index_col=[0])
+        def __init__(self,icd9checker_path):
+            self.data = pd.read_csv(icd9checker_path,index_col=[0])
         
         def lookup(self,code):
             if type(code) == pd.Series:
@@ -151,6 +155,115 @@ class ICDMappings(object):
             else:
                 raise ValueError('Expecting either a string or a pandas Series of strings. Got ',type(code))
                 
+                
+    class ICD9_3toCCS:
+        """
+        Maps 3rd level icd9 codes to ccs.
+        
+        TODO: add checker for eligible icd9 codes. For now just assumes the input is a 3rd level icd9 code without checking properly.
+        """
+        
+        
+        def __init__(self,file):
+            file = open(file,"r")
+            content = file.read()
+            file.close()
+            self.data = self.get_codes(content) # {ccs_code:[icd9_codes],...}
+            ccstoicd9_3_list = {k:[icd9[:3] for icd9 in self.data[k]] for k in self.data}
+            self._lookup_table = {ccstoicd9_3_list[ccs][i]:ccs for ccs in ccstoicd9_3_list for i in range(len(ccstoicd9_3_list[ccs]))} # {icd_3:ccs,...,icd_3:ccs}
+            
+            
+        def lookup(self,code):
+            """
+            Given a 3rd level icd9 code, returns the corresponding ccs code.
+            
+            Parameters
+            ----------
+            
+            code : str | pd.Series
+                3rd level icd9 code
+            
+            Returns:
+              np.nan: code doesn't match
+              >0: corresponding ccs code
+            """
+            
+            def lookup_single(code : str):
+                try:
+                    return self._lookup_table[code]
+                except:
+                    return np.nan
+            
+            if type(code) == pd.Series:
+                return code.apply(lookup_single)
+            elif type(code) == 'str':
+                return lookup_single(code)
+            else:
+                raise ValueError(f'Wrong input type. Expecting str or pd.Series. Got {type(code)}')
+        
+        def get_codes(self, content):
+
+            groups = re.findall('(\d+\s+[A-Z].*(\n.+)+)',content)
+            """
+            Unfortunately we need this function because this regex isn't perfect
+
+            Rules:
+            #ccs code is always first element
+            # always ignore empty strings
+            # while in the first line, gotta wait for a \n inside a string
+            # after the first \n we have icd9 codes.
+            # some codes will have \n as they are the last code before a newline
+            # some strings may be just \n without any text attached
+        
+            Returns
+            -------
+
+            data : dict
+                {ccs_code:[icd9_codes],...,ccs_code:[icd9_codes}
+            """
+
+
+            data = {}
+
+            for group in groups:
+
+                group = group[0]
+                tokens = group.split(' ')
+                ccs_code = None
+
+                is_first_tok =True # first token is a ccs code
+                is_first_line = True #ignore all tokens in the first line (except the first which is a ccs code)
+
+                for tok in tokens:
+                    if is_first_tok: # first token is always the ccs code
+                        ccs_code = int(tok)
+                        data[ccs_code] = []
+
+                        is_first_tok = False
+                        continue
+
+                    if tok == '': #ignore empty strings resulted from .split
+                        continue
+
+                    if '\n' in tok:
+
+                        if tok == '\n':
+                            if is_first_line: #We are not in the first line anymore
+                                is_first_line=False
+                            continue
+                        else:
+                            if is_first_line: #We are not in the first line anymore
+                                is_first_line=False
+                                continue 
+                            else:
+                                tok = tok.replace('\n','') # code with a \n attached. clean it
+
+                    elif is_first_line: # Ignore everything in the first line
+                        continue
+
+                    # this token wasn't ignored in the previous steps. save it as a icd9 code
+                    data[ccs_code].append(tok)
+            return data
     
     class ICD9toCCS:
         """
@@ -163,13 +276,8 @@ class ICDMappings(object):
             file = open(file,"r")
             content = file.read()
             file.close()
-            lookup = {}
-            groups = re.findall('(\d+\s+[A-Z].*(\n.+)+)',content)
-            for group in groups:
-                parsed = group[0].split()
-                for code in parsed[2:]:
-                    lookup[code] = int(parsed[0])
-            self._lookup_table = lookup
+            self.data = self.get_codes(content) # {ccs_code:[icd9_codes],...}
+            self._lookup_table = {self.data[ccs][i]:ccs for ccs in self.data for i in range(len(self.data[ccs]))} # {icd9_code:ccs_code,...}
 
         def lookup(self,code):
             """
@@ -198,6 +306,73 @@ class ICDMappings(object):
                 return lookup_single(code)
             else:
                 raise ValueError(f'Wrong input type. Expecting str or pd.Series. Got {type(code)}')
+                
+
+        def get_codes(self, content):
+
+            groups = re.findall('(\d+\s+[A-Z].*(\n.+)+)',content)
+            """
+            Unfortunately we need this function because this regex isn't perfect
+
+            Rules:
+            #ccs code is always first element
+            # always ignore empty strings
+            # while in the first line, gotta wait for a \n inside a string
+            # after the first \n we have icd9 codes.
+            # some codes will have \n as they are the last code before a newline
+            # some strings may be just \n without any text attached
+
+
+
+            Returns
+            -------
+
+            data : dict
+                {ccs_code:[icd9_codes],...,ccs_code:[icd9_codes}
+            """
+
+
+            data = {}
+
+            for group in groups:
+
+                group = group[0]
+                tokens = group.split(' ')
+                ccs_code = None
+
+                is_first_tok =True # first token is a ccs code
+                is_first_line = True #ignore all tokens in the first line (except the first which is a ccs code)
+
+                for tok in tokens:
+                    if is_first_tok: # first token is always the ccs code
+                        ccs_code = int(tok)
+                        data[ccs_code] = []
+
+                        is_first_tok = False
+                        continue
+
+                    if tok == '': #ignore empty strings resulted from .split
+                        continue
+
+                    if '\n' in tok:
+
+                        if tok == '\n':
+                            if is_first_line: #We are not in the first line anymore
+                                is_first_line=False
+                            continue
+                        else:
+                            if is_first_line: #We are not in the first line anymore
+                                is_first_line=False
+                                continue 
+                            else:
+                                tok = tok.replace('\n','') # code with a \n attached. clean it
+
+                    elif is_first_line: # Ignore everything in the first line
+                        continue
+
+                    # this token wasn't ignored in the previous steps. save it as a icd9 code
+                    data[ccs_code].append(tok)
+            return data
                 
     class ICD9toCCI:
         """
