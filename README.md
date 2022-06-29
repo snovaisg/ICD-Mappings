@@ -13,7 +13,7 @@ Supports mapping either a `single code` at a time, or a `pandas series` of codes
 
 # Current Supported Mappings
 
-[ICD9->10->9](https://www.nber.org/research/data/icd-9-cm-and-icd-10-cm-and-icd-10-pcs-crosswalk-or-general-equivalence-mappings) maps between icd9 and icd10 codes (in both directions).
+[ICD9<->10](https://www.nber.org/research/data/icd-9-cm-and-icd-10-cm-and-icd-10-pcs-crosswalk-or-general-equivalence-mappings) maps between icd9 and icd10 codes (in both directions).
 
 [CCS](https://www.hcup-us.ahrq.gov/toolssoftware/ccs/ccs.jsp) maps icd9 codes into the 272 diagnostic groups of CCS.
 
