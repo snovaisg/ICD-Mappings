@@ -4,7 +4,8 @@ The class **ICDMappings** maps:
 - icd9 to icd10;
 - icd10 to icd9;
 - icd9 to CCS;
-- icd9_3 (3rd level) to CCS;
+- icd9 to icd9_3 (3rd level);
+- icd9_3 to CCS;
 - icd9 to icd9 chapters;
 - icd9 to chronic vs not-chronic;
 - icd9 checker (checks if a code is in fact icd9);
