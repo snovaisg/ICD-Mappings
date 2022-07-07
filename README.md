@@ -73,7 +73,7 @@ data
 
 # Feature requests
 
-Feel free to sugest feature requests, such as turning this into a script in case your pipeline does not use python.
+Feel free to sugest feature requests under `Issues`, such as turning this into a script in case your pipeline does not use python.
 
 
 # Acknowledgments
