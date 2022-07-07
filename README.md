@@ -71,6 +71,11 @@ data
 >>> 3      3669   86  H269
 ```
 
+# Feature requests
+
+Feel free to sugest feature requests, such as turning this into a script in case your pipeline does not use python.
+
+
 # Acknowledgments
 
 [Tekaichi](https://github.com/Tekaichi) for building the icd9->ccs pipeline
