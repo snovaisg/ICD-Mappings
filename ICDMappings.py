@@ -196,7 +196,7 @@ class ICDMappings(object):
             
             if type(code) == pd.Series:
                 return code.apply(lookup_single)
-            elif type(code) == 'str':
+            elif type(code) == str:
                 return lookup_single(code)
             else:
                 raise ValueError(f'Wrong input type. Expecting str or pd.Series. Got {type(code)}')
@@ -302,7 +302,7 @@ class ICDMappings(object):
             
             if type(code) == pd.Series:
                 return code.apply(lookup_single)
-            elif type(code) == 'str':
+            elif type(code) == str:
                 return lookup_single(code)
             else:
                 raise ValueError(f'Wrong input type. Expecting str or pd.Series. Got {type(code)}')
@@ -409,7 +409,7 @@ class ICDMappings(object):
                         return np.nan
                 if type(code) == pd.Series:
                     return code.apply(lookup_single)
-                elif type(code) == 'str':
+                elif type(code) == str:
                     return lookup_single(code)
                 else:
                     raise ValueError(f'Wrong input type. Expecting str or pd.Series. Got {type(code)}')
@@ -584,7 +584,7 @@ class ICDMappings(object):
                             return np.nan
                     if type(code) == pd.Series:
                         return code.apply(lookup_single)
-                    elif type(code) == 'str':
+                    elif type(code) == str:
                         return lookup_single(code)
                     else:
                         raise ValueError(f'Wrong input type. Expecting str or pd.Series. Got {type(code)}')    
@@ -633,7 +633,7 @@ class ICDMappings(object):
                             return np.nan
                     if type(code) == pd.Series:
                         return code.apply(lookup_single)
-                    elif type(code) == 'str':
+                    elif type(code) == str:
                         return lookup_single(code)
                     else:
                         raise ValueError(f'Wrong input type. Expecting str or pd.Series. Got {type(code)}')    
