@@ -51,7 +51,7 @@ data
 
 # check available groupers
 icdmap.get_available_groupers()
->>> ['icd9toccs', 'icd9_3toccs', 'icd9to10', 'icd10to9', 'icd9tochapter', 'icd9_level3', 'icd9tocci', 'icd9checker']
+>>> ['icd9toccs', 'icd9_3toccs', 'ccstodescription', 'icd9to10', 'icd10to9', 'icd9tochapter', 'icd9_level3', 'icd9tocci', 'icd9checker']
 
 # let's do the first one: icd9 to ccs
 data['ccs'] = icdmap.lookup('icd9toccs',data['ICD9_CODE'])
