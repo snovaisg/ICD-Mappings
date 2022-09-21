@@ -4,6 +4,7 @@ The class **ICDMappings** maps:
 - icd9 to icd10;
 - icd10 to icd9;
 - icd9 to CCS;
+- CCS to description;
 - icd9 to icd9_3 (3rd level);
 - icd9_3 to CCS;
 - icd9 to icd9 chapters;
@@ -78,4 +79,4 @@ Feel free to sugest feature requests under `Issues`, such as turning this into a
 
 # Acknowledgments
 
-[Tekaichi](https://github.com/Tekaichi) for building the icd9->ccs pipeline
+[Tekaichi](https://github.com/Tekaichi) for building the initial version of the icd9->ccs pipeline
