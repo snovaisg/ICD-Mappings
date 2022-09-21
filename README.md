@@ -38,6 +38,10 @@ from ICDMappings import ICDMappings
 # init
 icdmap = ICDMappings()
 
+# check available groupers
+icdmap.get_available_groupers()
+>>> ['icd9toccs', 'icd9_3toccs', 'ccstodescription', 'icd9to10', 'icd10to9', 'icd9tochapter', 'icd9_level3', 'icd9tocci', 'icd9checker']
+
 # create some data of icd9 codes
 data = pd.DataFrame(data=["29410","5362","34290","3669"],
                     columns=['ICD9_CODE']
@@ -49,11 +53,7 @@ data
 >>> 2     34290
 >>> 3      3669
 
-# check available groupers
-icdmap.get_available_groupers()
->>> ['icd9toccs', 'icd9_3toccs', 'ccstodescription', 'icd9to10', 'icd10to9', 'icd9tochapter', 'icd9_level3', 'icd9tocci', 'icd9checker']
-
-# let's do the first one: icd9 to ccs
+# let's do a random one: icd9 to ccs
 data['ccs'] = icdmap.lookup('icd9toccs',data['ICD9_CODE'])
 data
 >>>   ICD9_CODE  ccs
