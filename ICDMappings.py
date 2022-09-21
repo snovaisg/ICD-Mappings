@@ -47,7 +47,8 @@ class ICDMappings(object):
     
     def __init__(self, 
                  icd9toccs_path=None, 
-                 icd9_3toccs_path=None, 
+                 icd9_3toccs_path=None,
+                 ccstodescription_path=None,
                  icd10to9_path=None, 
                  icd9to10_path=None, 
                  icd9tochapter_path=None, 
@@ -64,6 +65,7 @@ class ICDMappings(object):
         # default paths in case they aren't specified in init
         self.default_icd9toccs_path= 'icd_mappings/CCS-SingleDiagnosisGrouper.txt'
         self.default_icd9_3toccs_path = self.default_icd9toccs_path # yes, uses the same file
+        self.default_ccstodescription_path=self.default_icd9toccs_path # same here
         self.default_icd9tochapter_path = 'icd_mappings/icd9-CM-code-chapter-en=PT.csv'
         self.default_icd9to10_path = 'icd_mappings/icd9toicd10cmgem.csv'
         self.default_icd10to9_path = 'icd_mappings/icd10cmtoicd9gem.csv'
@@ -72,6 +74,7 @@ class ICDMappings(object):
         
         icd9toccs_path = self.default_icd9toccs_path if icd9toccs_path is None else icd9toccs_path
         icd9_3toccs_path = self.default_icd9_3toccs_path if icd9_3toccs_path is None else icd9_3toccs_path
+        ccstodescription_path = self.default_ccstodescription_path if ccstodescription_path is None else ccstodescription_path
         icd9to10_path = self.default_icd9to10_path if icd9to10_path is None else icd9to10_path
         icd10to9_path = self.default_icd10to9_path if icd10to9_path is None else icd10to9_path
         icd9tochapter_path = self.default_icd9tochapter_path if icd9tochapter_path is None else icd9tochapter_path
@@ -81,6 +84,7 @@ class ICDMappings(object):
         # init converter classes
         self.icd9toccs = self.ICD9toCCS(icd9toccs_path)
         self.icd9_3toccs = self.ICD9_3toCCS(icd9_3toccs_path)
+        self.ccstodescription = self.CCStoDescription(ccstodescription_path)
         self.icd9to10 = self.ICD9to10(icd9to10_path)
         self.icd10to9 = self.ICD10to9(icd10to9_path)
         self.icd9tochapter = self.ICD9toChapters(icd9tochapter_path)
@@ -90,6 +94,7 @@ class ICDMappings(object):
         
         self.groupers = {'icd9toccs':self.icd9toccs,
                          'icd9_3toccs':self.icd9_3toccs,
+                         'ccstodescription':self.ccstodescription,
                          'icd9to10':self.icd9to10,
                          'icd10to9':self.icd10to9,
                          'icd9tochapter':self.icd9tochapter,
@@ -263,6 +268,72 @@ class ICDMappings(object):
 
                     # this token wasn't ignored in the previous steps. save it as a icd9 code
                     data[ccs_code].append(tok)
+            return data
+        
+    class CCStoDescription:
+        """
+        Maps icd9 codes to CCS groups
+        
+        source of mapping: https://www.hcup-us.ahrq.gov/toolssoftware/ccs/ccs.jsp
+        """
+        def __init__(self,file):
+
+            file = open(file,"r")
+            content = file.read()
+            file.close()
+            self.data = self.get_codes(content) # {ccs_code:description, ...}
+            self._lookup_table = self.data
+
+        def lookup(self,code):
+            """
+            Given a ccs code, returns the corresponding ccs description
+            
+            Parameters
+            ----------
+            
+            code : str | pd.Series
+                ccs code
+            
+            Returns:
+              np.nan: code doesn't match
+              some_string: corresponding ccs description
+            """
+            
+            def lookup_single(code : str):
+                try:
+                    return self._lookup_table[code]
+                except:
+                    return np.nan
+            
+            if type(code) == pd.Series:
+                return code.apply(lookup_single)
+            elif type(code) == str:
+                return lookup_single(code)
+            else:
+                raise ValueError(f'Wrong input type. Expecting str or pd.Series. Got {type(code)}')
+                
+
+        def get_codes(self, content):
+
+            groups = re.findall('(\d+)\s+([A-Z].*)',content)
+            """
+            Unfortunately we need this function because this regex isn't perfect
+
+            Returns
+            -------
+
+            data : dict
+                {ccs_code:description,...}
+            """
+
+            data = {}
+            for g in groups:
+                ccs_code = int(g[0])
+                desc = g[1]
+                if any(char.isdigit() for char in desc): # regex catches some lines with codes that start with V or E
+                    continue                             # but since these codes also have digits, we know how to ignore them
+                data[ccs_code] = desc
+
             return data
     
     class ICD9toCCS:
