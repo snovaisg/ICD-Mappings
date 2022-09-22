@@ -135,6 +135,8 @@ class ICDMappings(object):
             if type(code) == pd.Series:
                 code_level3 = code.astype(str).apply(lambda code:code[:3])
                 assert code_level3.apply(len).unique()[0] == 3,f'Oops. Got {code_level3.apply(len).unique()}'
+            elif type(code) == list:
+                code_level3 = [str(c)[:3] for c in code]
             else:
                 code_level3 = str(code)[:3]
                 assert len(code_level3) == 3,f'Oops. Got {code_level3}'
@@ -157,8 +159,10 @@ class ICDMappings(object):
                 return pd.Series(data=[d in self.data.index for d in code],index=code.index)
             elif type(code) == str:
                 return d in self.data.index
+            elif type(code) == list:
+                return [d in self.data.index for d in code]
             else:
-                raise ValueError('Expecting either a string or a pandas Series of strings. Got ',type(code))
+                raise ValueError('Expecting either a string, list, or a pandas Series of strings. Got ',type(code))
                 
                 
     class ICD9_3toCCS:
@@ -203,6 +207,9 @@ class ICDMappings(object):
                 return code.apply(lookup_single)
             elif type(code) == str:
                 return lookup_single(code)
+            elif type(code) == list:
+                assert all([type(c) == str for c in code]), 'Oops. All codes from list must be a string'
+                return [lookup_single(c) for c in code]
             else:
                 raise ValueError(f'Wrong input type. Expecting str or pd.Series. Got {type(code)}')
         
@@ -309,8 +316,10 @@ class ICDMappings(object):
                 return code.apply(lookup_single)
             elif type(code) == str:
                 return lookup_single(code)
+            elif type(code) == list:
+                return [lookup_single(c) for c in code]
             else:
-                raise ValueError(f'Wrong input type. Expecting str or pd.Series. Got {type(code)}')
+                raise ValueError(f'Wrong input type. Expecting str, list or pd.Series. Got {type(code)}')
                 
 
         def get_codes(self, content):
@@ -375,8 +384,11 @@ class ICDMappings(object):
                 return code.apply(lookup_single)
             elif type(code) == str:
                 return lookup_single(code)
+            elif type(code) == list:
+                assert all([type(c) == str for c in code]), 'Oops. All codes in list must be a string'
+                return [lookup_single(c) for c in code]
             else:
-                raise ValueError(f'Wrong input type. Expecting str or pd.Series. Got {type(code)}')
+                raise ValueError(f'Wrong input type. Expecting str, list or pd.Series. Got {type(code)}')
                 
 
         def get_codes(self, content):
@@ -482,8 +494,10 @@ class ICDMappings(object):
                     return code.apply(lookup_single)
                 elif type(code) == str:
                     return lookup_single(code)
+                elif type(code) == list:
+                    return [lookup_single(c) for c in code]
                 else:
-                    raise ValueError(f'Wrong input type. Expecting str or pd.Series. Got {type(code)}')
+                    raise ValueError(f'Wrong input type. Expecting str, list or pd.Series. Got {type(code)}')
 
 
         def _read_and_process(self):
@@ -657,6 +671,8 @@ class ICDMappings(object):
                         return code.apply(lookup_single)
                     elif type(code) == str:
                         return lookup_single(code)
+                    elif type(code) == list:
+                        return [lookup_single(c) for c in code]
                     else:
                         raise ValueError(f'Wrong input type. Expecting str or pd.Series. Got {type(code)}')    
 
