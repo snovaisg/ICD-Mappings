@@ -11,7 +11,7 @@ The class **ICDMappings** maps:
 - icd9 to chronic vs not-chronic;
 - icd9 checker (checks if a code is in fact icd9);
 
-Supports mapping either a `single code` at a time, a `list`of codes, or a `pandas series` of codes.
+Supports mapping either a `single code` at a time, a `list` of codes, or a `pandas series` of codes.
 
 # Current Supported Mappings
 
