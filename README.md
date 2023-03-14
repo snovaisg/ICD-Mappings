@@ -34,10 +34,21 @@ mapper.show_mappers()
 mapper.show_validators()
 >>> ['icd9'] # going to add icd10 later
 
-# 
+# let's map some codse
 
-# create some data of icd9 codes
-data = pd.DataFrame(data=["29410","5362","NOT_A_CODE","3669"],
+icd9_codes = ['29410', '5362', 'NOT_A_CODE', '3669']
+
+# icd9 to ccs
+mapper.map('icd9toccs',icd9_codes)
+>>> ['653', '141', None, '86']
+
+# icd9 to icd10
+mapper.map('icd9toicd10',icd9_codes)
+>>> ['F0280', 'R111000', None, 'H269']
+
+# Also works with pandas
+
+data = pd.DataFrame(data=['29410','5362','NOT_A_CODE','3669'],
                     columns=['ICD9_CODE']
                    )
 data
