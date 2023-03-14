@@ -1,17 +1,18 @@
 # ICDMappings
+
  
-The class **ICDMappings** maps:
+The main class **Mapper** maps:
 - icd9 to icd10;
 - icd10 to icd9;
 - icd9 to CCS;
 - CCS to description;
 - icd9 to icd9_3 (3rd level);
-- icd9_3 to CCS;
 - icd9 to icd9 chapters;
 - icd9 to chronic vs not-chronic;
-- icd9 checker (checks if a code is in fact icd9);
 
-Supports mapping either a `single code` at a time, a `list` of codes, or a `pandas series` of codes.
+Supports mapping either a `single code` at a time, or an iterable of codes (range, list, np.array, pd.Series, etc...).
+
+Important Note: when icd9 or icd10 is mentioned it refers to icd9-cm and icd10-cm.
 
 # Current Supported Mappings
 
@@ -33,14 +34,18 @@ Supports mapping either a `single code` at a time, a `list` of codes, or a `pand
 ```python
 # imports
 import pandas as pd
-from ICDMappings import ICDMappings
+from icdmappings import Mapper
 
 # init
-icdmap = ICDMappings()
+mapepr = Mapper()
 
-# check available groupers
-icdmap.get_available_groupers()
->>> ['icd9toccs', 'icd9_3toccs', 'ccstodescription', 'icd9to10', 'icd10to9', 'icd9tochapter', 'icd9_level3', 'icd9tocci', 'icd9checker']
+# check available mappers
+mapper.show_mappers()
+>>> ['icd9toccs', 'icd9toicd10', 'icd10toicd9', 'icd9tochapter', 'icd9tolevel3', 'icd9tocci']
+
+# check available validators
+mapper.show_validators()
+>>> ['icd9'] # going to add icd10 later
 
 # create some data of icd9 codes
 data = pd.DataFrame(data=["29410","5362","34290","3669"],
@@ -54,7 +59,7 @@ data
 >>> 3      3669
 
 # let's do a random one: icd9 to ccs
-data['ccs'] = icdmap.lookup('icd9toccs',data['ICD9_CODE'])
+data['ccs'] = mapper.map('icd9toccs',data['ICD9_CODE'])
 data
 >>>   ICD9_CODE  ccs
 >>> 0     29410  653
@@ -63,7 +68,7 @@ data
 >>> 3      3669   86
 
 # now icd9 to icd10
-data['ICD10'] = icdmap.lookup('icd9to10',data['ICD9_CODE'])
+data['ICD10'] = mapper.map('icd9to10',data['ICD9_CODE'])
 data
 >>>   ICD9_CODE  ccs  ICD10
 >>> 0     29410  653  F0280
