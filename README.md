@@ -26,8 +26,6 @@ It also validates whether an icd9 code is a valid procedure or diagnostic.
 
 [CCI](https://www.hcup-us.ahrq.gov/toolssoftware/chronic/chronic.jsp) classifies each icd9 code into Chronic vs Not-chronic condition.
 
-**ICD9 checker** helps to check if a code is an icd9 code or not. Uses only the latest version (2015) to check. Data is taken from [National Bureau of Economic Researh](https://www.nber.org/research/data/icd-9-cm-diagnosis-and-procedure-codes)
-
 
 # Usage
 
