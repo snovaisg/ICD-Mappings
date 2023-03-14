@@ -35,7 +35,7 @@ import pandas as pd
 from icdmappings import Mapper
 
 # init
-mapepr = Mapper()
+mapper = Mapper()
 
 # check available mappers
 mapper.show_mappers()
