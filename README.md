@@ -1,31 +1,20 @@
 # ICDMappings
 
+This tool helps woking with ICD codes. It maps between ICD versions (such as between ICD9 and ICD10) but also maps to other codings such as ICD9 to CCS (reducing the universe of diagnostics to just 283 categories), CCI (which classifies a diagnostic code into either chronic or non-chronic).
+
 The main class **Mapper** maps:
-- icd9 to icd10;
-- icd10 to icd9;
-- icd9 to CCS;
-- icd9 to icd9_3 (3rd level);
-- icd9 to icd9 chapters;
-- icd9 to chronic vs not-chronic;
+- [ICD9<->ICD10](https://www.nber.org/research/data/icd-9-cm-and-icd-10-cm-and-icd-10-pcs-crosswalk-or-general-equivalence-mappings): ICD9-CM and ICD10-CM (in both directions).
+- [ICD9->CCS](): ICD9-CM to CCS (Clinical Classification Software) codes;
+- [ICD9->ICD9Chapters](https://icd.codes/icd9cm): ICD9-CM diagnostic codes to the 19 Chapters;
+- [ICD9->CCI](https://www.hcup-us.ahrq.gov/toolssoftware/chronic/chronic.jsp) ICD9-CM diagnostics to CCI (Chronic Condition Indicator). True of False depending on whether a diagnostic is chronic or not;
+- ICD9->ICD9_3: Gets the 3rd level of an ICD9-CM diagnostic code;
 
-Supports mapping either a `single code` at a time, or an iterable of codes (range, list, np.array, pd.Series, etc...).
 
-Important Note: when icd9 or icd10 is mentioned it refers to icd9-cm and icd10-cm.
+Supports mapping either a `single code` at a time, or an `iterable of codes` (range, list, np.array, pd.Series, etc...).
 
-It also validates whether an icd9 code is a valid procedure or diagnostic.
+----
 
-# Current Supported Mappings
-
-[ICD9<->10](https://www.nber.org/research/data/icd-9-cm-and-icd-10-cm-and-icd-10-pcs-crosswalk-or-general-equivalence-mappings) maps between icd9 and icd10 codes (in both directions).
-
-[CCS](https://www.hcup-us.ahrq.gov/toolssoftware/ccs/ccs.jsp) maps icd9 codes into the 272 diagnostic groups of CCS.
-
-[ICD9 Chapters](https://icd.codes/icd9cm) maps icd9 codes into the 19 icd9 chapters.
-
-**ICD9 level 3** is the 3rd level of the hierarchy of any ICD9 diagnostic code (first 3 digits).
-
-[CCI](https://www.hcup-us.ahrq.gov/toolssoftware/chronic/chronic.jsp) classifies each icd9 code into Chronic vs Not-chronic condition.
-
+> :warning: **Warning:** When ICD9 or ICD10 is mentioned, it refers to the American version aka ICD9-CM / ICD10-CM.
 
 # Usage
 
@@ -45,34 +34,36 @@ mapper.show_mappers()
 mapper.show_validators()
 >>> ['icd9'] # going to add icd10 later
 
+# 
+
 # create some data of icd9 codes
-data = pd.DataFrame(data=["29410","5362","34290","3669"],
+data = pd.DataFrame(data=["29410","5362","NOT_A_CODE","3669"],
                     columns=['ICD9_CODE']
                    )
 data
->>>   ICD9_CODE
->>> 0     29410
->>> 1      5362
->>> 2     34290
->>> 3      3669
+>>>      ICD9_CODE
+>>> 0        29410
+>>> 1         5362
+>>> 2   NOT_A_CODE
+>>> 3         3669
 
 # icd9 to ccs
 data['ccs'] = mapper.map('icd9toccs',data['ICD9_CODE'])
 data
->>>   ICD9_CODE  ccs
->>> 0     29410  653
->>> 1      5362  141
->>> 2     34290   82
->>> 3      3669   86
+>>>     ICD9_CODE    ccs
+>>> 0       29410    653
+>>> 1        5362    141
+>>> 2  NOT_A_CODE   None
+>>> 3        3669     86
 
 # icd9 to icd10
 data['ICD10'] = mapper.map('icd9to10',data['ICD9_CODE'])
 data
->>>   ICD9_CODE  ccs  ICD10
->>> 0     29410  653  F0280
->>> 1      5362  141  R1110
->>> 2     34290   82  G8190
->>> 3      3669   86  H269
+>>>     ICD9_CODE    ccs  ICD10
+>>> 0       29410    653  F0280
+>>> 1        5362    141  R1110
+>>> 2  NOT_A_CODE   None  None
+>>> 3        3669     86  H269
 ```
 
 # Feature requests
