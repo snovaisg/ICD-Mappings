@@ -1,6 +1,5 @@
 # ICDMappings
 
- 
 The main class **Mapper** maps:
 - icd9 to icd10;
 - icd10 to icd9;
@@ -12,6 +11,8 @@ The main class **Mapper** maps:
 Supports mapping either a `single code` at a time, or an iterable of codes (range, list, np.array, pd.Series, etc...).
 
 Important Note: when icd9 or icd10 is mentioned it refers to icd9-cm and icd10-cm.
+
+It also validates whether an icd9 code is a valid procedure or diagnostic.
 
 # Current Supported Mappings
 
