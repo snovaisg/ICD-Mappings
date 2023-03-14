@@ -5,7 +5,6 @@ The main class **Mapper** maps:
 - icd9 to icd10;
 - icd10 to icd9;
 - icd9 to CCS;
-- CCS to description;
 - icd9 to icd9_3 (3rd level);
 - icd9 to icd9 chapters;
 - icd9 to chronic vs not-chronic;
