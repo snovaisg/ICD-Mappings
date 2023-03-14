@@ -56,7 +56,7 @@ data
 >>> 2     34290
 >>> 3      3669
 
-# let's do a random one: icd9 to ccs
+# icd9 to ccs
 data['ccs'] = mapper.map('icd9toccs',data['ICD9_CODE'])
 data
 >>>   ICD9_CODE  ccs
@@ -65,7 +65,7 @@ data
 >>> 2     34290   82
 >>> 3      3669   86
 
-# now icd9 to icd10
+# icd9 to icd10
 data['ICD10'] = mapper.map('icd9to10',data['ICD9_CODE'])
 data
 >>>   ICD9_CODE  ccs  ICD10
