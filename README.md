@@ -7,7 +7,7 @@ List of all mappers:
 - [ICD9->CCS](): ICD9-CM to CCS (Clinical Classification Software) codes;
 - [ICD9->ICD9Chapters](https://icd.codes/icd9cm): ICD9-CM diagnostic codes to the 19 Chapters;
 - [ICD9->CCI](https://www.hcup-us.ahrq.gov/toolssoftware/chronic/chronic.jsp) ICD9-CM diagnostics to CCI (Chronic Condition Indicator). True of False depending on whether a diagnostic is chronic or not;
-- ICD9->ICD9_3: Gets the 3rd level of an ICD9-CM diagnostic code;
+- ICD9->Level3: Gets the 3rd level of an ICD9-CM diagnostic code;
 
 
 Supports mapping either a `single code` at a time, or an `iterable of codes` (range, list, np.array, pd.Series, etc...).
