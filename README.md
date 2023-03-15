@@ -12,9 +12,12 @@ List of all mappers:
 
 Supports mapping either a `single code` at a time, or an `iterable of codes` (range, list, np.array, pd.Series, etc...).
 
-----
 
 > :warning: **Warning:** When ICD9 or ICD10 is mentioned, it refers to the American version aka ICD9-CM / ICD10-CM.
+
+# Installation
+
+`pip install icd-mappings`
 
 # Usage
 
