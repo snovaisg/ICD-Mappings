@@ -57,8 +57,8 @@ class Mapper():
         return validator
 
     def map(self, 
-            mapper : str,
-            codes : str | Iterable):
+            codes : str | Iterable,
+            mapper : str):
         
         mapper = self._internal_mapping.get(mapper)
 
