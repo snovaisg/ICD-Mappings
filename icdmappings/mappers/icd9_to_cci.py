@@ -1,10 +1,7 @@
-import pandas as pd
-import numpy as np
 from typing import List
 import os
 from collections.abc import Iterable
-import re
-
+import csv
 
 class ICD9toCCI:
         """
@@ -48,33 +45,32 @@ class ICD9toCCI:
                     True: When the code is chronic
                     False: when the code is not chronic
                 """
-                def lookup_single(icd9code : str):
+                def map_single(icd9code : str):
                     try:
                         return self.icd9_to_cci[icd9code]
                     except:
                         return None
-                if isinstance(icd9code, str):
-                    return lookup_single(icd9code)
-                elif isinstance(icd9code, Iterable):
-                    mapping =  [lookup_single(c) for c in icd9code]
-                    
-                    if isinstance(icd9code, np.ndarray):
-                        mapping = np.array(mapping)
 
-                    elif isinstance(icd9code, pd.Series):
-                        mapping = pd.Series(mapping, index=icd9code.index)
-                    return mapping
-                
-                raise TypeError(f'Wrong input type. Expecting str or Iterable. Got {type(icd9code)}')
+                if isinstance(icd9code, str):
+                    return map_single(icd9code)
+                elif isinstance(icd9code, Iterable):
+                    return [map_single(c) for c in icd9code]
+                else:
+                     raise TypeError(f'Wrong input type. Expecting str or Iterable. Got {type(icd9code)}')
 
 
         def _parse_file(self, filepath : str):
-            df = pd.read_csv(filepath,usecols=[0,2])
-            df.columns = [col.replace("'","") for col in df.columns]
-            df['ICD-9-CM CODE'] = df['ICD-9-CM CODE'].str.replace("'","").str.strip()
-            df['CATEGORY DESCRIPTION'] = df['CATEGORY DESCRIPTION'].str.replace("'","").str.strip()
-            df = df.rename(columns={'CATEGORY DESCRIPTION':'CHRONIC'})
-            df['CHRONIC'] = df['CHRONIC'].map({'0':False,'1':True})
+            with open(filepath) as csvfile:
+                reader = csv.reader(csvfile, quotechar="'")
+                headers = next(reader)
 
-            return df.set_index('ICD-9-CM CODE')['CHRONIC'].to_dict()
-        
+                cci_to_bool = {'1':True,'0':False}
+
+                mapping = {}
+
+                for row in reader:
+                    icd9_code = row[0].strip()
+                    cci = cci_to_bool[row[2]]
+                    mapping[icd9_code] = cci
+
+            return mapping

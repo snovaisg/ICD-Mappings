@@ -1,7 +1,5 @@
 from abc import ABC, abstractclassmethod
-import numpy as np
-import pandas as pd
-from typing import List
+from collections.abc import Iterable
 
 class ICDValidatorInterface(ABC):
     """
@@ -13,8 +11,8 @@ class ICDValidatorInterface(ABC):
     
     @abstractclassmethod
     def validate_diagnostics(self, 
-            codes : str | List | pd.Series | np.ndarray,
-            ) -> bool | List | pd.Series | np.ndarray:
+            codes : str | Iterable,
+            ) -> bool | Iterable:
         """
         Returns True of False if the code is a valid diagnostic code.
         """
@@ -22,8 +20,8 @@ class ICDValidatorInterface(ABC):
 
     @abstractclassmethod
     def validate_procedures(self, 
-            codes : str | List | pd.Series | np.ndarray,
-            ) -> bool | List | pd.Series | np.ndarray:
+            codes : str | Iterable,
+            ) -> bool | Iterable:
         """
         Returns True of False if the code is a valid procedure code.
         """

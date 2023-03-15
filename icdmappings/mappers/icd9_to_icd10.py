@@ -1,8 +1,7 @@
-import pandas as pd
-import numpy as np
 import os
 from collections.abc import Iterable
 from .mapper_interface import MapperInterface
+import csv
 
 
 class ICD9toICD10(MapperInterface):
@@ -40,36 +39,31 @@ class ICD9toICD10(MapperInterface):
             Returns:
                 icd10 code or None when the mapping is not possible
             """
-            def lookup_single(code : str):
+            def map_single(code : str):
                 try:
                     return self.icd9_to_icd10[code]
                 except:
                     return None
             
             if isinstance(icd9code, str):
-                return lookup_single(icd9code)
+                return  map_single(icd9code)
             elif isinstance(icd9code, Iterable):
-                mapping = [ lookup_single(c) for c in icd9code ]
-
-                if isinstance(icd9code, np.ndarray):
-                    mapping =  np.array(mapping)
-                elif isinstance(icd9code, pd.Series):
-                    mapping =  pd.Series(mapping, index=icd9code.index)
-
-                return mapping
-                
-            raise TypeError(f'Wrong input type. Expecting str or Iterable. Got {type(icd9code)}')    
+                return [ map_single(c) for c in icd9code ]
+            
+            raise TypeError(f'Wrong input type. Expecting str or Iterable. Got {type(icd9code)}')
 
 
     def _parse_file(self, filepath : str):
-        df = pd.read_csv(filepath,dtype={'icd10cm':str,'icd9cm':str})
 
-        df.loc[df.no_map == 1,'icd10cm'] = "-1"
+        mapping = {}
 
-        mappings = dict()
+        with open(filepath) as csvfile:
+            reader = csv.reader(csvfile, quotechar='"')
+            headers = next(reader)
 
-        records = df.set_index('icd9cm')['icd10cm'].to_dict()
+            for row in reader:
+                icd9, icd10 = row[0], row[1]
 
-        mappings.update(records) # currently, rewrites with the last mapping when there are multiple mappings for the same icd9 code
+                mapping[icd9] = icd10
+        return mapping
 
-        return mappings

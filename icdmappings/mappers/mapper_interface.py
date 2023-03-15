@@ -1,7 +1,6 @@
 from abc import ABC, abstractclassmethod
-import numpy as np
-import pandas as pd
 from typing import List
+from collections.abc import Iterable
 
 class MapperInterface(ABC):
     """
@@ -9,12 +8,12 @@ class MapperInterface(ABC):
     """
 
     def __init__(self):
-        self._supported_inputs = [str,list,pd.Series,np.ndarray]
+        pass
     
     @abstractclassmethod
     def map(self, 
-            codes : str | List | pd.Series | np.ndarray,
-            ) -> str | List | pd.Series | np.ndarray | None:
+            codes : str | Iterable,
+            ) -> str | Iterable:
         """
         Maps input codes to target encoding. 
         If unsuccessful mapping, returns None.

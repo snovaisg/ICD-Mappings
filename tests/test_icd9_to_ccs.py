@@ -1,6 +1,3 @@
-import numpy as np
-import pandas as pd
-
 def test_import():
     from icdmappings.mappers import ICD9toCCS
     return
@@ -34,13 +31,3 @@ def test_mapper():
     expected = ["37", None, "110"]
     result = mapper.map(code)
     assert result == expected
-
-    code = pd.Series(["20104",123, "4339"])
-    expected = pd.Series(["37", None, "110"],index=code.index)
-    result = mapper.map(code)
-    assert result.equals(expected)
-
-    code = np.array(["20104",123, "4339"])
-    expected = np.array(["37", None, "110"])
-    result = mapper.map(code)
-    assert np.array_equal(result,expected)

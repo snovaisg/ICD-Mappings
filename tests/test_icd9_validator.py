@@ -1,6 +1,3 @@
-import pandas as pd
-import numpy as np
-
 def test_icd9_validator_import():
     from icdmappings.validators import ICD9Validator
     return
@@ -40,16 +37,6 @@ def test_icd9_validator_validate_diagnostics():
     result = validator.validate_diagnostics(codes)
     assert result == expected
 
-    codes = pd.Series(['iso',32.13,'V4282'])
-    expected = pd.Series([False, False, True],index=codes.index)
-    result = validator.validate_diagnostics(codes)
-    assert result.equals(expected)
-
-    codes = np.array(['iso',32.13,'V4282'])
-    expected = np.array([False, False, True])
-    result = validator.validate_diagnostics(codes)
-    assert np.array_equal(result,expected)
-
 
 def test_icd9_validator_validate_procedures():
     from icdmappings.validators import ICD9Validator
@@ -80,13 +67,3 @@ def test_icd9_validator_validate_procedures():
     expected = [False, False, True]
     result = validator.validate_procedures(codes)
     assert result == expected
-
-    codes = np.array(['iso',32.13,'437'])
-    expected = np.array([False, False, True])
-    result = validator.validate_procedures(codes)
-    assert np.array_equal(result,expected)
-
-    codes = pd.Series(['iso',32.13,'437'])
-    expected = pd.Series([False, False, True],index=codes.index)
-    result = validator.validate_procedures(codes)
-    assert result.equals(expected)
