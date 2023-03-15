@@ -1,6 +1,4 @@
 from .icd_validator_interface import ICDValidatorInterface
-import pandas as pd
-import numpy as np
 from typing import List
 import os
 from collections.abc import Iterable
@@ -46,16 +44,12 @@ class ICD9Validator(ICDValidatorInterface):
                 return codes in self.diagnostics.keys()
             elif isinstance(codes,Iterable):
                 valid = [code in self.diagnostics.keys() if code is not None else None for code in codes]
-                if isinstance(codes,np.ndarray):
-                    valid = np.array(valid)
-                elif isinstance(codes,pd.Series):
-                    valid = pd.Series(valid,index=codes.index)
                 return valid
             raise TypeError('Expects a string or iterable of strings as codes.')
         
         def validate_procedures(self,
-                               codes : str | List | pd.Series | np.ndarray,
-                              ) -> bool | List | pd.Series | np.ndarray:
+                               codes : str | Iterable,
+                              ) -> bool | Iterable:
             
             if codes is None:
                 return None
@@ -63,10 +57,6 @@ class ICD9Validator(ICDValidatorInterface):
                 return codes in self.procedures.keys()
             elif isinstance(codes,Iterable):
                 valid = [code in self.procedures.keys() if code is not None else None for code in codes]
-                if isinstance(codes,np.ndarray):
-                    valid = np.array(valid)
-                elif isinstance(codes,pd.Series):
-                    valid = pd.Series(valid,index=codes.index)
                 return valid
             raise TypeError('Expects a string or iterable of strings as codes.')
         

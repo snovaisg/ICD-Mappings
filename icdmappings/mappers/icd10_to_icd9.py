@@ -1,15 +1,11 @@
-import pandas as pd
-import numpy as np
 import os
 from collections.abc import Iterable
 from .mapper_interface import MapperInterface
-
-
+import csv
 
 class ICD10toICD9(MapperInterface):
     """
     Maps icd10 codes to icd9.
-    
     
     Source of mapping: https://www.nber.org/research/data/icd-9-cm-and-icd-10-cm-and-icd-10-pcs-crosswalk-or-general-equivalence-mappings
     """
@@ -27,6 +23,14 @@ class ICD10toICD9(MapperInterface):
         
         self.icd10_to_icd9 = self._parse_file(filepath)
 
+
+    def _map_single(self, icd10code : str):
+            
+        try:
+            return self.icd10_to_icd9[icd10code]
+        except:
+            return None
+
     def map(self,
             icd10code : str | Iterable
             ):
@@ -42,37 +46,26 @@ class ICD10toICD9(MapperInterface):
         Returns:
             icd9 code or np.nan when the mapping is not possible
         """
-        def lookup_single(icd10code : str):
-            try:
-                return self.icd10_to_icd9[icd10code]
-            except:
-                return None
             
         if isinstance(icd10code, str):
-            return lookup_single(icd10code)
+            return self._map_single(icd10code)
 
         elif isinstance(icd10code, Iterable):
-            mapping = [ lookup_single(c) for c in icd10code ]
-
-            if isinstance(icd10code, np.ndarray):
-                mapping =  np.array(mapping)
-            elif isinstance(icd10code, pd.Series):
-                mapping =  pd.Series(mapping, index=icd10code.index)
-            
-            return mapping
+            return [ self._map_single(c) for c in icd10code ]
         
         raise TypeError(f'Wrong input type. Expecting str or pd.Series. Got {type(icd10code)}')    
 
 
     def _parse_file(self, filepath : str):
-        df = pd.read_csv(filepath, dtype={'icd10cm':str,'icd9cm':str})
 
-        df.loc[df.no_map == 1,'icd9cm'] = "-1"
+        mapping = {}
 
-        mappings = dict()
+        with open(filepath) as csvfile:
+            reader = csv.reader(csvfile, quotechar='"')
+            headers = next(reader)
 
-        records = df.set_index('icd10cm')['icd9cm'].to_dict()
+            for row in reader:
+                icd10, icd9 = row[0].strip(), row[1].strip()
 
-        mappings.update(records) # currently, rewrites with the last mapping when there are multiple mappings for the same icd9 code
-
-        return mappings
+                mapping[icd10] = icd9
+        return mapping

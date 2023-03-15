@@ -1,5 +1,3 @@
-import pandas as pd
-import numpy as np
 from typing import List
 import os
 from collections.abc import Iterable
@@ -37,6 +35,12 @@ class ICD9toCCS(MapperInterface):
             with open(filepath,"r") as f:
                 content = f.read()
             return self._get_codes(content)
+        
+        def _map_single(self, icd9code : str):
+            try:
+                return self.icd9_to_ccs[icd9code]
+            except:
+                return None
 
         def map(self,
                 icd9code: str | Iterable
@@ -56,23 +60,11 @@ class ICD9toCCS(MapperInterface):
               >0: corresponding ccs code
             """
             
-            def lookup_single(icd9code : str):
-                try:
-                    return self.icd9_to_ccs[icd9code]
-                except:
-                    return None
-            
             if isinstance(icd9code, str):
-                return lookup_single(icd9code)
+                return self._map_single(icd9code)
             
             elif isinstance(icd9code, Iterable):
-                new_code = [lookup_single(code) for code in icd9code]
-
-                if isinstance(icd9code, np.ndarray):
-                    new_code = np.array(new_code)
-                elif isinstance(icd9code, pd.Series):
-                    new_code = pd.Series(new_code, index=icd9code.index)
-                return new_code
+                return[self._map_single(code) for code in icd9code]
             raise TypeError('Expects a string or iterable of strings as codes.')
 
         def _get_codes(self, content : str):

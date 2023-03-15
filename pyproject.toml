@@ -9,8 +9,6 @@ packages = [{include = "icd_mappings"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-pandas = "^1.2"
-numpy = "^1.21"
 
 
 [tool.poetry.group.dev.dependencies]
