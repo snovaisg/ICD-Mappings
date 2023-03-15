@@ -19,62 +19,24 @@ Supports mapping either a `single code` at a time, or an `iterable of codes` (ra
 # Usage
 
 ```python
-# imports
-import pandas as pd
 from icdmappings import Mapper
 
-# init
 mapper = Mapper()
-
-# check available mappers
-mapper.show_mappers()
->>> ['icd9toccs', 'icd9toicd10', 'icd10toicd9', 'icd9tochapter', 'icd9tolevel3', 'icd9tocci']
-
-# check available validators
-mapper.show_validators()
->>> ['icd9'] # going to add icd10 later
-
-# let's map some codse
 
 icd9_codes = ['29410', '5362', 'NOT_A_CODE', '3669']
 
 # icd9 to ccs
-mapper.map('icd9toccs',icd9_codes)
+mapper.map(icd9_codes, mapper='icd9toccs')
 >>> ['653', '141', None, '86']
 
 # icd9 to icd10
-mapper.map('icd9toicd10',icd9_codes)
+mapper.map(icd9_codes, mapper='icd9toicd10')
 >>> ['F0280', 'R111000', None, 'H269']
 
-# Also works with pandas
 
-data = pd.DataFrame(data=['29410','5362','NOT_A_CODE','3669'],
-                    columns=['ICD9_CODE']
-                   )
-data
->>>      ICD9_CODE
->>> 0        29410
->>> 1         5362
->>> 2   NOT_A_CODE
->>> 3         3669
-
-# icd9 to ccs
-data['ccs'] = mapper.map('icd9toccs',data['ICD9_CODE'])
-data
->>>     ICD9_CODE    ccs
->>> 0       29410    653
->>> 1        5362    141
->>> 2  NOT_A_CODE   None
->>> 3        3669     86
-
-# icd9 to icd10
-data['ICD10'] = mapper.map('icd9to10',data['ICD9_CODE'])
-data
->>>     ICD9_CODE    ccs  ICD10
->>> 0       29410    653  F0280
->>> 1        5362    141  R1110
->>> 2  NOT_A_CODE   None  None
->>> 3        3669     86  H269
+# You can also check available mappers
+mapper.show_mappers()
+>>> ['icd9toccs', 'icd9toicd10', 'icd10toicd9', 'icd9tochapter', 'icd9tolevel3', 'icd9tocci']
 ```
 
 # Feature requests
