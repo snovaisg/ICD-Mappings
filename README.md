@@ -1,6 +1,6 @@
 # ICDMappings
 
-This tool helps woking with ICD codes. It maps between ICD versions (such as between ICD9 and ICD10) but also maps to other codings such as ICD9 to CCS (reducing the universe of diagnostics to just 283 categories), CCI (which classifies a diagnostic code into either chronic or non-chronic).
+This tool helps woking with ICD codes. It maps between ICD versions (such as between ICD9 and ICD10). Also maps to other codings such as CCS (Computer Software Classification), and CCI (Chronic Condition Indicator).
 
 The main class **Mapper** maps:
 - [ICD9<->ICD10](https://www.nber.org/research/data/icd-9-cm-and-icd-10-cm-and-icd-10-pcs-crosswalk-or-general-equivalence-mappings): ICD9-CM and ICD10-CM (in both directions).
