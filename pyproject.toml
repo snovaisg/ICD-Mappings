@@ -5,7 +5,7 @@ description = "This python tools allows you to map icd codes between versions (9
 authors = ["Simao Novais <snovaisg.97@gmail.com>"]
 license = "MIT License"
 readme = "README.md"
-packages = [{include = "icd_mappings"}]
+packages = [{include = "icdmappings"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
