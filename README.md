@@ -23,14 +23,14 @@ from icdmappings import Mapper
 
 mapper = Mapper()
 
-icd9_codes = ['29410', '5362', 'NOT_A_CODE', '3669']
+icd9codes = ['29410', '5362', 'NOT_A_CODE', '3669']
 
 # icd9 to ccs
-mapper.map(icd9_codes, mapper='icd9toccs')
+mapper.map(icd9codes, mapper='icd9toccs')
 >>> ['653', '141', None, '86']
 
 # icd9 to icd10
-mapper.map(icd9_codes, mapper='icd9toicd10')
+mapper.map(icd9codes, mapper='icd9toicd10')
 >>> ['F0280', 'R111000', None, 'H269']
 
 
