@@ -23,6 +23,11 @@ from icdmappings import Mapper
 
 mapper = Mapper()
 
+icd9code = '29410'
+mapper.map(icd9code, 'icd9toccs')
+>>> '653'
+
+# Can also map any Iterable of codes
 icd9codes = ['29410', '5362', 'NOT_A_CODE', '3669']
 
 # icd9 to ccs
@@ -32,7 +37,6 @@ mapper.map(icd9codes, mapper='icd9toccs')
 # icd9 to icd10
 mapper.map(icd9codes, mapper='icd9toicd10')
 >>> ['F0280', 'R111000', None, 'H269']
-
 
 # You can also check available mappers
 mapper.show_mappers()
