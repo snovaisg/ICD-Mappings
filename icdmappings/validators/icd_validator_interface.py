@@ -13,7 +13,7 @@ class ICDValidatorInterface(ABC):
     @abstractclassmethod
     def validate_diagnostics(self, 
             codes : Union[str, Iterable],
-            ) -> bool | Iterable:
+            ) -> Union[bool, Iterable]:
         """
         Returns True of False if the code is a valid diagnostic code.
         """
