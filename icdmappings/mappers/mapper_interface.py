@@ -1,5 +1,5 @@
 from abc import ABC, abstractclassmethod
-from typing import List
+from typing import List, Union
 from collections.abc import Iterable
 
 class MapperInterface(ABC):
@@ -12,8 +12,8 @@ class MapperInterface(ABC):
     
     @abstractclassmethod
     def map(self, 
-            codes : str | Iterable,
-            ) -> str | Iterable:
+            codes : Union[str, Iterable],
+            ) -> Union[str, Iterable]:
         """
         Maps input codes to target encoding. 
         If unsuccessful mapping, returns None.

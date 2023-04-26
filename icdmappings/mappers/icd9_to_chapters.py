@@ -1,4 +1,4 @@
-from typing import List
+from typing import List,Union
 import os
 from collections.abc import Iterable
 from .mapper_interface import MapperInterface
@@ -45,7 +45,7 @@ class ICD9toChapters(MapperInterface):
                     return None
 
 
-        def map(self, icd9code : str | Iterable):
+        def map(self, icd9code : Union[str, Iterable]):
             """
             Parameters
             ----------
@@ -63,7 +63,7 @@ class ICD9toChapters(MapperInterface):
             raise TypeError(f'Wrong input type. Expecting str or Iterable. Got {type(icd9code)}')
                     
 
-        def _get_bin(self, number : int | Iterable, bins : List):
+        def _get_bin(self, number : Union[int, Iterable], bins : List):
             if isinstance(number,int):
                 return bisect.bisect(bins, number)
             elif isinstance(number,Iterable):

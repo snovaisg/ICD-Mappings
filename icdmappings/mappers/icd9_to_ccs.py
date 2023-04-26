@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Union
 import os
 from collections.abc import Iterable
 import re
@@ -43,7 +43,7 @@ class ICD9toCCS(MapperInterface):
                 return None
 
         def map(self,
-                icd9code: str | Iterable
+                icd9code: Union[str, Iterable]
                 ):
             """
             Given an icd9 code, returns the corresponding ccs code.

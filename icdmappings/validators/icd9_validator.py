@@ -1,7 +1,8 @@
 from .icd_validator_interface import ICDValidatorInterface
-from typing import List
+from typing import List, Union
 import os
 from collections.abc import Iterable
+
 
 class ICD9Validator(ICDValidatorInterface):
         """
@@ -24,8 +25,8 @@ class ICD9Validator(ICDValidatorInterface):
         
 
         def validate_diagnostics(self, 
-                                codes : str | Iterable,
-                                ) -> bool | Iterable:
+                                codes : Union[str,Iterable],
+                                ) -> Union[bool, Iterable]:
             """validates if a code or iterable of codes are valid diagnostics.
             If iterable is numpy or pd.Series, returns the same type. ALl other iterables are returned as List.
 
@@ -48,8 +49,8 @@ class ICD9Validator(ICDValidatorInterface):
             raise TypeError('Expects a string or iterable of strings as codes.')
         
         def validate_procedures(self,
-                               codes : str | Iterable,
-                              ) -> bool | Iterable:
+                               codes : Union[str, Iterable],
+                              ) -> Union[bool, Iterable]:
             
             if codes is None:
                 return None

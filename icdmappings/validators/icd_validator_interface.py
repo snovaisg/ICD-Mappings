@@ -1,5 +1,6 @@
 from abc import ABC, abstractclassmethod
 from collections.abc import Iterable
+from typing import Union
 
 class ICDValidatorInterface(ABC):
     """
@@ -11,7 +12,7 @@ class ICDValidatorInterface(ABC):
     
     @abstractclassmethod
     def validate_diagnostics(self, 
-            codes : str | Iterable,
+            codes : Union[str, Iterable],
             ) -> bool | Iterable:
         """
         Returns True of False if the code is a valid diagnostic code.
@@ -20,8 +21,8 @@ class ICDValidatorInterface(ABC):
 
     @abstractclassmethod
     def validate_procedures(self, 
-            codes : str | Iterable,
-            ) -> bool | Iterable:
+            codes : Union[str, Iterable],
+            ) -> Union[bool, Iterable]:
         """
         Returns True of False if the code is a valid procedure code.
         """

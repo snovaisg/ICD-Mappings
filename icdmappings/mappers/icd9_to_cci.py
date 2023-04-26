@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Union
 import os
 from collections.abc import Iterable
 import csv
@@ -29,7 +29,7 @@ class ICD9toCCI:
 
 
         def map(self,
-                icd9code : str | Iterable
+                icd9code : Union[str, Iterable]
                 ):
                 """
                 Given an icd9 code, returns the corresponding Chronic value (True for chronic, and False for not-chronic)

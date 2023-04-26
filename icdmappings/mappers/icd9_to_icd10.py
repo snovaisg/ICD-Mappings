@@ -2,6 +2,7 @@ import os
 from collections.abc import Iterable
 from .mapper_interface import MapperInterface
 import csv
+from typing import Union
 
 
 class ICD9toICD10(MapperInterface):
@@ -26,7 +27,7 @@ class ICD9toICD10(MapperInterface):
         # creates self.chapters_num, self.chapters_char, self.bins
         self.icd9_to_icd10 = self._parse_file(filepath)
 
-    def map(self,icd9code : str | Iterable):
+    def map(self,icd9code : Union[str, Iterable]):
             """
             Given an icd9 code, returns the corresponding icd10 code.
 

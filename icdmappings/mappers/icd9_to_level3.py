@@ -1,5 +1,6 @@
 from .mapper_interface import MapperInterface
 from collections.abc import Iterable
+from typing import Union
 
 class ICD9toLEVEL3(MapperInterface):
     """
@@ -16,7 +17,7 @@ class ICD9toLEVEL3(MapperInterface):
             return icd9code[:3]
         return None
 
-    def map(self, icd9code : str | Iterable):
+    def map(self, icd9code : Union[str, Iterable]):
         
         if isinstance(icd9code,str):
             return self._map_single(icd9code)

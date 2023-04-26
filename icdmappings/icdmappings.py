@@ -1,6 +1,7 @@
 from .mappers import * 
 from .validators import ICD9Validator
 from collections.abc import Iterable
+from typing import Union
 class Mapper():
 
     def __init__(self):
@@ -37,13 +38,13 @@ class Mapper():
     def show_validators(self):
         return list(self._internal_validators.keys())
     
-    def validate_diagnostics(self, codes : str | Iterable, category : str):
+    def validate_diagnostics(self, codes : Union[str,Iterable], category : str):
 
         validator = self._get_validator(category)
         
         return validator.validate_diagnostics(codes)
     
-    def validate_procedures(self, codes : str | Iterable, category : str):
+    def validate_procedures(self, codes : Union[str,Iterable], category : str):
 
         validator = self._get_validator(category)
         
@@ -57,7 +58,7 @@ class Mapper():
         return validator
 
     def map(self, 
-            codes : str | Iterable,
+            codes : Union[str,Iterable],
             mapper : str):
         
         mapper = self._internal_mapping.get(mapper)

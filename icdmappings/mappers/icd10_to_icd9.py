@@ -2,6 +2,7 @@ import os
 from collections.abc import Iterable
 from .mapper_interface import MapperInterface
 import csv
+from typing import Union
 
 class ICD10toICD9(MapperInterface):
     """
@@ -32,7 +33,7 @@ class ICD10toICD9(MapperInterface):
             return None
 
     def map(self,
-            icd10code : str | Iterable
+            icd10code : Union[str, Iterable]
             ):
         """
         Given an icd10 code, returns the corresponding icd9 code.
