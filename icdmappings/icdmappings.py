@@ -37,13 +37,13 @@ class Mapper():
     def show_validators(self):
         return list(self._internal_validators.keys())
     
-    def validate_diagnostics(self, category : str, codes : str | Iterable):
+    def validate_diagnostics(self, codes : str | Iterable, category : str):
 
         validator = self._get_validator(category)
         
         return validator.validate_diagnostics(codes)
     
-    def validate_procedures(self, category : str, codes : str | Iterable):
+    def validate_procedures(self, codes : str | Iterable, category : str):
 
         validator = self._get_validator(category)
         
