@@ -2,8 +2,9 @@ from typing import List, Union
 import os
 from collections.abc import Iterable
 import re
-import pkg_resources
 from .mapper_interface import MapperInterface
+import importlib.resources
+from icdmappings import data_files
 
 class ICD9toCCS(MapperInterface):
         """
@@ -12,20 +13,15 @@ class ICD9toCCS(MapperInterface):
         source of mapping: https://www.hcup-us.ahrq.gov/toolssoftware/ccs/ccs.jsp
         """
         def __init__(self):
-            self.path2file = "data_sources/CCS-SingleDiagnosisGrouper.txt"
+            self.filename = "CCS-SingleDiagnosisGrouper.txt"
             self._setup()
 
 
         def _setup(self):
-            current_file_path = pkg_resources.resource_filename(__name__, '')
-            self.path2file = os.path.join(
-                os.path.dirname(
-                os.path.dirname(current_file_path)),
-                  self.path2file
-            )
+            filepath = importlib.resources.path(data_files,self.filename)
             
             # {ccs:[icd9,...],..., ccs:[icd9,...]}
-            self.ccs_to_icd9 = self._parse_file(self.path2file)
+            self.ccs_to_icd9 = self._parse_file(filepath)
 
             # (inverse mapping): {icd9:ccs,..., icd9:ccs}
             self.icd9_to_ccs = self.ccs_to_icd9 = {self.ccs_to_icd9[ccs][i]:ccs for ccs in self.ccs_to_icd9 for i in range(len(self.ccs_to_icd9[ccs]))} 

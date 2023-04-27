@@ -3,7 +3,8 @@ from collections.abc import Iterable
 from .mapper_interface import MapperInterface
 import csv
 from typing import Union
-import pkg_resources
+import importlib.resources
+from icdmappings import data_files
 
 class ICD10toICD9(MapperInterface):
     """
@@ -12,17 +13,11 @@ class ICD10toICD9(MapperInterface):
     Source of mapping: https://www.nber.org/research/data/icd-9-cm-and-icd-10-cm-and-icd-10-pcs-crosswalk-or-general-equivalence-mappings
     """
     def __init__(self):
-        self.path2file = "data_sources/icd10cmtoicd9gem.csv"
+        self.filename = "icd10cmtoicd9gem.csv"
         self._setup()
 
     def _setup(self):
-        current_file_path = pkg_resources.resource_filename(__name__, '')
-        filepath = os.path.join(
-            os.path.dirname(
-            os.path.dirname(current_file_path)),
-                self.path2file
-        )
-        
+        filepath = importlib.resources.path(data_files,self.filename)
         self.icd10_to_icd9 = self._parse_file(filepath)
 
 

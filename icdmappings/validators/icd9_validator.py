@@ -2,7 +2,8 @@ from .icd_validator_interface import ICDValidatorInterface
 from typing import List, Union
 import os
 from collections.abc import Iterable
-import pkg_resources
+import importlib.resources
+from icdmappings import data_files
 
 
 class ICD9Validator(ICDValidatorInterface):
@@ -11,17 +12,11 @@ class ICD9Validator(ICDValidatorInterface):
         """
         
         def __init__(self):
-            self.path2folder = "data_sources/ICD-9-CM-v32-master-descriptions"
+            self.foldername = "ICD-9-CM-v32-master-descriptions"
             self._setup()
         
         def _setup(self):
-            current_file_path = pkg_resources.resource_filename(__name__, '')
-            self.path2folder = os.path.join(
-                   os.path.dirname(
-                    os.path.dirname(
-                        current_file_path)
-                   ),
-                   self.path2folder)
+            self.path2folder = importlib.resources.path(data_files,self.foldername)
             self.diagnostics = self._parse_diagnostics()
             self.procedures = self._parse_procedures()
             pass

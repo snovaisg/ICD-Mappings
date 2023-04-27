@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "icd-mappings"
-version = "0.1.5"
+version = "0.1.6"
 description = "This python tools allows you to map icd codes between versions (9 and 10) and also to other coding schemas such as CCS (Clinical Classification Software))"
 authors = ["Simao Novais <snovaisg.97@gmail.com>"]
 license = "MIT License"
@@ -11,7 +11,7 @@ include = ["data_sources/*"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
-setuptools = "^67.7.2"
+importlib-resources = "^5.12.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.2.2"
