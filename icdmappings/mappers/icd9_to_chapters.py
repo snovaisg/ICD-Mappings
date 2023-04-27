@@ -4,6 +4,7 @@ from collections.abc import Iterable
 from .mapper_interface import MapperInterface
 import bisect
 import csv
+import pkg_resources
 
 class ICD9toChapters(MapperInterface):
         """
@@ -16,10 +17,10 @@ class ICD9toChapters(MapperInterface):
             self._setup()
 
         def _setup(self):
+            current_file_path = pkg_resources.resource_filename(__name__, '')
             filepath = os.path.join(
                 os.path.dirname(
-                os.path.dirname(
-                os.path.dirname(os.path.abspath(__file__)))),
+                os.path.dirname(current_file_path)),
                   self.path2file
             )
 

@@ -2,6 +2,7 @@ from .icd_validator_interface import ICDValidatorInterface
 from typing import List, Union
 import os
 from collections.abc import Iterable
+import pkg_resources
 
 
 class ICD9Validator(ICDValidatorInterface):
@@ -14,14 +15,16 @@ class ICD9Validator(ICDValidatorInterface):
             self._setup()
         
         def _setup(self):
-             self.path2folder = os.path.join(
-                 os.path.dirname(
+            current_file_path = pkg_resources.resource_filename(__name__, '')
+            self.path2folder = os.path.join(
                    os.path.dirname(
-                   os.path.dirname(os.path.abspath(__file__)))
-                 ), self.path2folder)
-             self.diagnostics = self._parse_diagnostics()
-             self.procedures = self._parse_procedures()
-             pass
+                    os.path.dirname(
+                        current_file_path)
+                   ),
+                   self.path2folder)
+            self.diagnostics = self._parse_diagnostics()
+            self.procedures = self._parse_procedures()
+            pass
         
 
         def validate_diagnostics(self, 

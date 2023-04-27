@@ -2,6 +2,7 @@ from typing import List, Union
 import os
 from collections.abc import Iterable
 import csv
+import pkg_resources
 
 class ICD9toCCI:
         """
@@ -11,16 +12,15 @@ class ICD9toCCI:
         """
         def __init__(self):
             self.path2file = "data_sources/cci2015.csv"
-
             self.icd9_to_cci = None # will be filled by self._setup() {icd9code:cci,...icd9code:cci}
             self._setup()
 
 
         def _setup(self):
+            current_file_path = pkg_resources.resource_filename(__name__, '')
             filepath = os.path.join(
                 os.path.dirname(
-                os.path.dirname(
-                os.path.dirname(os.path.abspath(__file__)))),
+                os.path.dirname(current_file_path)),
                   self.path2file
             )
 

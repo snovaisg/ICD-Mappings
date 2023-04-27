@@ -2,7 +2,7 @@ from typing import List, Union
 import os
 from collections.abc import Iterable
 import re
-
+import pkg_resources
 from .mapper_interface import MapperInterface
 
 class ICD9toCCS(MapperInterface):
@@ -12,19 +12,18 @@ class ICD9toCCS(MapperInterface):
         source of mapping: https://www.hcup-us.ahrq.gov/toolssoftware/ccs/ccs.jsp
         """
         def __init__(self):
-
             self.path2file = "data_sources/CCS-SingleDiagnosisGrouper.txt"
             self._setup()
 
 
         def _setup(self):
+            current_file_path = pkg_resources.resource_filename(__name__, '')
             self.path2file = os.path.join(
                 os.path.dirname(
-                os.path.dirname(
-                os.path.dirname(os.path.abspath(__file__)))),
+                os.path.dirname(current_file_path)),
                   self.path2file
             )
-             
+            
             # {ccs:[icd9,...],..., ccs:[icd9,...]}
             self.ccs_to_icd9 = self._parse_file(self.path2file)
 
