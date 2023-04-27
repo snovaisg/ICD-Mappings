@@ -18,10 +18,8 @@ class ICD9toCCI:
 
 
         def _setup(self):
-            filepath = importlib.resources.path(data_files,self.filename)
-
             # creates self.chapters_num, self.chapters_char, self.bins
-            self.icd9_to_cci = self._parse_file(filepath)
+            self.icd9_to_cci = self._parse_file(self.filename)
 
 
         def map(self,
@@ -55,8 +53,8 @@ class ICD9toCCI:
                      raise TypeError(f'Wrong input type. Expecting str or Iterable. Got {type(icd9code)}')
 
 
-        def _parse_file(self, filepath : str):
-            with open(filepath) as csvfile:
+        def _parse_file(self, filename : str):
+            with importlib.resources.open_text(data_files, filename) as csvfile:
                 reader = csv.reader(csvfile, quotechar="'")
                 headers = next(reader)
 

@@ -17,8 +17,7 @@ class ICD10toICD9(MapperInterface):
         self._setup()
 
     def _setup(self):
-        filepath = importlib.resources.path(data_files,self.filename)
-        self.icd10_to_icd9 = self._parse_file(filepath)
+        self.icd10_to_icd9 = self._parse_file(self.filename)
 
 
     def _map_single(self, icd10code : str):
@@ -53,11 +52,11 @@ class ICD10toICD9(MapperInterface):
         raise TypeError(f'Wrong input type. Expecting str or pd.Series. Got {type(icd10code)}')    
 
 
-    def _parse_file(self, filepath : str):
+    def _parse_file(self, filename : str):
 
         mapping = {}
 
-        with open(filepath) as csvfile:
+        with importlib.resources.open_text(data_files, filename) as csvfile:
             reader = csv.reader(csvfile, quotechar='"')
             headers = next(reader)
 

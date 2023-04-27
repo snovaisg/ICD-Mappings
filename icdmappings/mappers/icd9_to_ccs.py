@@ -18,16 +18,14 @@ class ICD9toCCS(MapperInterface):
 
 
         def _setup(self):
-            filepath = importlib.resources.path(data_files,self.filename)
-            
             # {ccs:[icd9,...],..., ccs:[icd9,...]}
-            self.ccs_to_icd9 = self._parse_file(filepath)
+            self.ccs_to_icd9 = self._parse_file(self.filename)
 
             # (inverse mapping): {icd9:ccs,..., icd9:ccs}
             self.icd9_to_ccs = self.ccs_to_icd9 = {self.ccs_to_icd9[ccs][i]:ccs for ccs in self.ccs_to_icd9 for i in range(len(self.ccs_to_icd9[ccs]))} 
         
-        def _parse_file(self, filepath : str):
-            with open(filepath,"r") as f:
+        def _parse_file(self, filename : str):
+            with importlib.resources.open_text(data_files, filename) as f:
                 content = f.read()
             return self._get_codes(content)
         

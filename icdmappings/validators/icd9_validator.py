@@ -4,6 +4,7 @@ import os
 from collections.abc import Iterable
 import importlib.resources
 from icdmappings import data_files
+from icdmappings.data_files import ICD_9_CM_v32_master_descriptions
 
 
 class ICD9Validator(ICDValidatorInterface):
@@ -12,13 +13,13 @@ class ICD9Validator(ICDValidatorInterface):
         """
         
         def __init__(self):
-            self.foldername = "ICD-9-CM-v32-master-descriptions"
+            self.diagnostics_filename = 'CMS32_DESC_LONG_DX.txt'
+            self.procedures_filename = 'CMS32_DESC_LONG_SG.txt'
             self._setup()
         
         def _setup(self):
-            self.path2folder = importlib.resources.path(data_files,self.foldername)
-            self.diagnostics = self._parse_diagnostics()
-            self.procedures = self._parse_procedures()
+            self.diagnostics = self._parse_file(self.diagnostics_filename)
+            self.procedures = self._parse_file(self.procedures_filename)
             pass
         
 
@@ -58,16 +59,8 @@ class ICD9Validator(ICDValidatorInterface):
                 valid = [code in self.procedures.keys() if code is not None else None for code in codes]
                 return valid
             raise TypeError('Expects a string or iterable of strings as codes.')
-        
-        def _parse_diagnostics(self):
-            f = os.path.join(self.path2folder, f"CMS32_DESC_LONG_DX.txt")
-            return self._parse_file(f)
-        
-        def _parse_procedures(self):
-            f = os.path.join(self.path2folder, f"CMS32_DESC_LONG_SG.txt")
-            return self._parse_file(f)
 
-        def _parse_file(self,f):
+        def _parse_file(self,filename : str):
             """Parses a data file of icd9 codes. and returns a dictionary of codes and descriptions.
 
             Args:
@@ -77,7 +70,7 @@ class ICD9Validator(ICDValidatorInterface):
                 data[code]: description
             """
             data = dict()
-            with open(f,'r', encoding='latin-1') as f:
+            with importlib.resources.open_text(ICD_9_CM_v32_master_descriptions, filename,encoding='latin-1') as f:
                 for line in f:
                     code,desc = line.split(sep=' ', maxsplit=1)
                     data[code] = desc.strip()

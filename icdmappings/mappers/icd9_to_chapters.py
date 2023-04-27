@@ -18,9 +18,7 @@ class ICD9toChapters(MapperInterface):
             self._setup()
 
         def _setup(self):
-            filepath = importlib.resources.path(data_files,self.filename)
-            self.bins, self.char_mapping = self._parse_file(filepath)
-
+            self.bins, self.char_mapping = self._parse_file(self.filename)
         
         def _map_single(self,icd9code : str):
 
@@ -66,14 +64,14 @@ class ICD9toChapters(MapperInterface):
             return None
             
 
-        def _parse_file(self,filepath : str):
+        def _parse_file(self, filename : str):
             """
             Some preprocessing to optimize assignment speed later using np.digitize
             1. Separate chapters into numeric codes or alpha codes (There are two chapters considered alpha because they start with "E" or "V")
             2. Create self.bins, which contains starting code ranges of each chapter
             """
 
-            with open(filepath) as csvfile:
+            with importlib.resources.open_text(data_files, filename) as csvfile:
                 reader = csv.reader(csvfile, quotechar="'")
                 headers = next(reader)
 
