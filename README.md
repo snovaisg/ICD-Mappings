@@ -29,7 +29,7 @@ mapper.map(icd9codes, mapper='icd9toicd10')
 
 # You can also check available mappers
 mapper.show_mappers()
->>> ['icd9toccs', 'icd9toicd10', 'icd10toicd9', 'icd9tochapter', 'icd9tolevel3', 'icd9tocci']
+>>> ['icd9toccs', 'icd9toicd10', 'icd10toicd9', 'icd9tochapter', 'icd9tolevel3', 'icd9tocci', 'icd9level3toccs']
 ```
 
 # Mappers
@@ -40,6 +40,7 @@ List of all mappers:
 - [ICD9->ICD9Chapters](https://icd.codes/icd9cm): ICD9-CM diagnostic codes to the 19 Chapters;
 - [ICD9->CCI](https://www.hcup-us.ahrq.gov/toolssoftware/chronic/chronic.jsp) ICD9-CM diagnostics to CCI (Chronic Condition Indicator). True of False depending on whether a diagnostic is chronic or not;
 - ICD9->Level3: Gets the 3rd level of an ICD9-CM diagnostic code;
+- ICD9Level3->CCS: Sometimes codes in a database do not have the full length by default (poor quality of recording), so it can be useful to translate directly from the 3rd level to CCS. Some collisions happen (one icd9level3 could map to one of multiple ccs's) and at the moment we don't do anything about it;
 
 
 Supports mapping either a `single code` at a time, or an `iterable of codes` (range, list, np.array, pd.Series, etc...).
