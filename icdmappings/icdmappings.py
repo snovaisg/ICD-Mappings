@@ -10,6 +10,7 @@ class Mapper():
         self.icd9_to_cci = ICD9toCCI()
         self.icd9_to_level3 = ICD9toLEVEL3()
         self.icd9_to_ccs = ICD9toCCS()
+        self.icd9level3_to_ccs = ICD9Level3toCCS()
         self.icd9_to_chapters = ICD9toChapters()
         self.icd9_to_icd10 = ICD9toICD10()
         self.icd10_to_icd9 = ICD10toICD9()
@@ -18,6 +19,7 @@ class Mapper():
             'icd9tocci': self.icd9_to_cci,
             'icd9tolevel3': self.icd9_to_level3,
             'icd9toccs': self.icd9_to_ccs,
+            'icd9level3toccs': self.icd9level3_to_ccs,
             'icd9tochapter': self.icd9_to_chapters,
             'icd9toicd10': self.icd9_to_icd10,
             'icd10toicd9': self.icd10_to_icd9
