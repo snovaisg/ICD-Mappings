@@ -11,6 +11,10 @@ def test_mapper():
     from icdmappings.mappers import ICD9toChapters
     mapper = ICD9toChapters()
 
+    code = ""
+    expected = None
+    result = mapper.map(code)
+    assert result is expected
 
     code = "999"
     expected = "17" 
@@ -23,17 +27,16 @@ def test_mapper():
     assert result == expected
 
     code = 2.45
-    try:
-        result = mapper.map(code)
-    except TypeError:
-        pass
+    expected = None
+    result = mapper.map(code)
+    assert result is expected
 
-    code = ["20104",123, "4339"]
-    expected = ["2", None, "7"]
+    code = ["20104", 123, "4339", ""]
+    expected = ["2", None, "7", None]
     result = mapper.map(code)
     assert result == expected
     
-    # edge cases
+    # known "bug"/edge cases
     code = "15268176283765123123"
     expected = None
     will_get = mapper.map("152")
