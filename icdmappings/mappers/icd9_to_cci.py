@@ -22,22 +22,21 @@ class ICD9toCCI:
             self.icd9_to_cci = self._parse_file(self.filename)
 
 
-        def map(self,
-                icd9code : Union[str, Iterable]
-                ):
+        def map(self, icd9code : Union[str, Iterable]) -> Union[str, Iterable]:
                 """
-                Given an icd9 code, returns the corresponding Chronic value (True for chronic, and False for not-chronic)
+                Given an icd9 code, returns the corresponding Chronic classification
+                (True for chronic, and False for not-chronic)
 
                 Parameters
                 ----------
+                code : str or Iterable
+                    icd9 code or iterable of icd9 codes in string format.
 
-                code : str | pd.Series
-                    icd9 code
-
-                Returns:
-                    -1: code is not recognizable
-                    True: When the code is chronic
-                    False: when the code is not chronic
+                Returns
+                -------
+                True: When the code is chronic
+                False: when the code is not chronic
+                None: code is not recognizable
                 """
                 def map_single(icd9code : str):
                     try:
@@ -49,8 +48,6 @@ class ICD9toCCI:
                     return map_single(icd9code)
                 elif isinstance(icd9code, Iterable):
                     return [map_single(c) for c in icd9code]
-                else:
-                     raise TypeError(f'Wrong input type. Expecting str or Iterable. Got {type(icd9code)}')
 
 
         def _parse_file(self, filename : str):
