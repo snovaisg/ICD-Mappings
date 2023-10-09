@@ -8,11 +8,10 @@ from icdmappings import data_files
 
 class ICD9Level3toCCS(MapperInterface):
         """
-        Maps 3rd level icd9 codes to ccs.
+        Maps icd9_level3 codes (i.e. not the full code, only the first 3 digits) to ccs.
         
         TODO: add checker for eligible icd9 codes. For now just assumes the input is a 3rd level icd9 code without checking properly.
         """
-        
         
         def __init__(self):
             self.filename = "CCS-SingleDiagnosisGrouper.txt"
@@ -32,11 +31,9 @@ class ICD9Level3toCCS(MapperInterface):
         
         
         def _map_single(self, icd9level3code : str):
-            try:
-                return self.icd9level3_to_ccs[icd9level3code]
-            except:
-                return None
 
+            return self.icd9level3_to_ccs.get(icd9level3code)
+           
         def map(self,
                 icd9level3code: Union[str, Iterable]
                 ):
@@ -60,7 +57,8 @@ class ICD9Level3toCCS(MapperInterface):
             
             elif isinstance(icd9level3code, Iterable):
                 return[self._map_single(code) for code in icd9level3code]
-            raise TypeError('Expects a string or iterable of strings as codes.')
+            
+            return None
         
         def _get_codes(self, content : str):
             """

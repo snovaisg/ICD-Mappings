@@ -11,6 +11,11 @@ def test_mapper():
     from icdmappings.mappers import ICD9Level3toCCS
     mapper = ICD9Level3toCCS()
 
+    code = ""
+    expected = None
+    result = mapper.map(code)
+    assert result is expected
+
     code = "123.45"
     expected = None
     result = mapper.map(code)
@@ -33,7 +38,7 @@ def test_mapper():
     except TypeError:
         pass
 
-    code = ["201","20123", "433"]
-    expected = ["37", None, "110"]
+    code = ["201","20123", "433", 381, ""]
+    expected = ["37", None, "110", None, None]
     result = mapper.map(code)
     assert result == expected
