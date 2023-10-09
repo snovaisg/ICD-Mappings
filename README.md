@@ -1,5 +1,5 @@
 # ICDMappings
-This tool helps working with ICD codes. It maps between ICD versions (such as between ICD9 and ICD10). Also maps to other codings such as CCS (Computer Software Classification), and CCI (Chronic Condition Indicator).
+This tool helps working with ICD codes. It maps between ICD versions (such as between ICD9 and ICD10). Also maps to other codings such as CCS (Computer Software Classification), and classifies ICD9 codes as chronic or not thanks to CCI (Chronic Condition Indicator).
 
 # Installation
 
@@ -13,23 +13,35 @@ from icdmappings import Mapper
 mapper = Mapper()
 
 icd9code = '29410'
-mapper.map(icd9code, 'icd9toccs')
+mapper.map(icd9code, source='icd9', target='ccs')
 >>> '653'
 
-# Can also map any Iterable of codes
+# Can also map any Iterable of codes (list, numpy array, pandas Series, you name it)
 icd9codes = ['29410', '5362', 'NOT_A_CODE', '3669']
 
-# icd9 to ccs
-mapper.map(icd9codes, mapper='icd9toccs')
+mapper.map(icd9codes, source='icd9', target='ccs')
 >>> ['653', '141', None, '86']
 
+# classify icd9 into chronic or not-chronic conditions
+mapper.map(icd9codes, source='icd9', target='cci')
+>>> [True, False, None, True]
+
 # icd9 to icd10
-mapper.map(icd9codes, mapper='icd9toicd10')
+mapper.map(icd9codes, source='icd9', target='icd9toicd10')
 >>> ['F0280', 'R111000', None, 'H269']
 
 # You can also check available mappers
 mapper.show_mappers()
->>> ['icd9toccs', 'icd9toicd10', 'icd10toicd9', 'icd9tochapter', 'icd9tolevel3', 'icd9tocci', 'icd9level3toccs']
+>>> Here are the available mappers
+>>>
+>>> From icd9 to:
+>>>        - level3
+>>>        - cci
+>>>        - ccs
+>>>        - chapter
+>>>        - icd10
+>>> From icd10 to:
+>>>        - icd9
 ```
 
 # Mappers
@@ -40,10 +52,10 @@ List of all mappers:
 - [ICD9->ICD9Chapters](https://icd.codes/icd9cm): ICD9-CM diagnostic codes to the 19 Chapters;
 - [ICD9->CCI](https://www.hcup-us.ahrq.gov/toolssoftware/chronic/chronic.jsp) ICD9-CM diagnostics to CCI (Chronic Condition Indicator). True of False depending on whether a diagnostic is chronic or not;
 - ICD9->Level3: Gets the 3rd level of an ICD9-CM diagnostic code;
-- ICD9Level3->CCS: Sometimes codes in a database do not have the full length by default (poor quality of recording), so it can be useful to translate directly from the 3rd level to CCS. Some collisions happen (one icd9level3 could map to one of multiple ccs's) and at the moment we don't do anything about it;
+- ICD9Level3->CCS: Maps the 3rd level of an ICD9 code into the corresponding CCS code. Why? Sometimes codes in a database do not have the full length by default (poor quality of recording), so it can be useful to translate directly from the 3rd level to CCS. Some collisions happen (one icd9level3 could map to one of multiple ccs's) and at the moment we simply choose one of the compatible CCS codes.
 
 
-Supports mapping either a `single code` at a time, or an `iterable of codes` (range, list, np.array, pd.Series, etc...).
+Supports mapping either a `single code` at a time, or an `iterable of codes` (range, list, numpy array, pandas Series, etc...).
 
 
 > :warning: When ICD9 or ICD10 is mentioned, it always refers to the American version aka ICD9-CM / ICD10-CM.
