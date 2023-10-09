@@ -27,10 +27,9 @@ def test_mapper():
     assert result == expected
 
     code = 2.45
-    try:
-        result = mapper.map(code)
-    except TypeError:
-        pass
+    expected = None
+    result = mapper.map(code)
+    assert result is expected
 
     code = ["20104",123, "4339", "", "918283818"]
     expected = ["37", None, "110", None, None]
