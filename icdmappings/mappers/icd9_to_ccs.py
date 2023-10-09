@@ -29,16 +29,13 @@ class ICD9toCCS(MapperInterface):
                 content = f.read()
             return self._get_codes(content)
         
-        def _map_single(self, icd9code : str):
-            
+        def _map_single(self, icd9code : str) -> str:
             return self.icd9_to_ccs.get(icd9code)
 
-        def map(self,
-                icd9code: Union[str, Iterable]
-                ):
+        def map(self,icd9code: Union[str, Iterable]) -> Union[str, Iterable]:
             """
-            Given an icd9 code, returns the corresponding ccs code.
-            If input is Iterable returns a list of codes. If np.array or pd.Series, returns in the same format.
+            Given an icd9 code, returns the corresponding CCS code.
+            If input is Iterable returns a list of codes. 
             
             Parameters
             ----------
@@ -47,8 +44,7 @@ class ICD9toCCS(MapperInterface):
                 icd9 code
             
             Returns:
-              None: code doesn't match
-              >0: corresponding ccs code
+                ccs code or None when the mapping is not possible
             """
             
             if isinstance(icd9code, str):

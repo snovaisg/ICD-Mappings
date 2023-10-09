@@ -19,7 +19,6 @@ class ICD9toLEVEL3(MapperInterface):
         if isinstance(icd9code,str):
             return icd9code[:3]
         
-        return None
 
     def map(self, icd9code : Union[str, Iterable]) -> Union[str, Iterable]:
         

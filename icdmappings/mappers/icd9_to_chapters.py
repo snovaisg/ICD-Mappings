@@ -20,7 +20,7 @@ class ICD9toChapters(MapperInterface):
         def _setup(self):
             self.bins, self.char_mapping = self._parse_file(self.filename)
         
-        def _map_single(self, icd9code : str):
+        def _map_single(self, icd9code : str) -> str:
             """
             Maps a single ICD9 code in string format to its corresponding chapter.
 
@@ -38,7 +38,7 @@ class ICD9toChapters(MapperInterface):
             if not icd9code: # empty string or None
                 return None
 
-            if not isinstance(icd9code, str):
+            if not isinstance(icd9code, str): # has to be string
                 return None
             
             if icd9code[0] in ['E','V']:
@@ -54,7 +54,7 @@ class ICD9toChapters(MapperInterface):
                     return None
 
 
-        def map(self, icd9code : Union[str, Iterable]):
+        def map(self, icd9code : Union[str, Iterable]) -> Union[str, Iterable]:
             """
             Maps an ICD9 code or an Iterable of ICD9 codes to their corresponding chapters.
 
@@ -69,10 +69,9 @@ class ICD9toChapters(MapperInterface):
             """
             if isinstance(icd9code,str):
                 return self._map_single(icd9code)
+            
             elif isinstance(icd9code, Iterable):
                 return [self._map_single(code) for code in icd9code]
-            return None
-                    
 
         def _get_bin(self, number : Union[int, Iterable], bins : List):
             if isinstance(number,int):
@@ -84,7 +83,7 @@ class ICD9toChapters(MapperInterface):
 
         def _parse_file(self, filename : str):
             """
-            Some preprocessing to optimize assignment speed later using np.digitize
+            Preprocessing of bins to optimize assignment speed during mapping.
             1. Separate chapters into numeric codes or alpha codes (There are two chapters considered alpha because they start with "E" or "V")
             2. Create self.bins, which contains starting code ranges of each chapter
             """

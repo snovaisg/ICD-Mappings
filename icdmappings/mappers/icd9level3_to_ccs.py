@@ -31,7 +31,6 @@ class ICD9Level3toCCS(MapperInterface):
         
         
         def _map_single(self, icd9level3code : str):
-
             return self.icd9level3_to_ccs.get(icd9level3code)
            
         def map(self,
@@ -57,8 +56,6 @@ class ICD9Level3toCCS(MapperInterface):
             
             elif isinstance(icd9level3code, Iterable):
                 return[self._map_single(code) for code in icd9level3code]
-            
-            return None
         
         def _get_codes(self, content : str):
             """

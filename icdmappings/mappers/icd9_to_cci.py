@@ -21,33 +21,31 @@ class ICD9toCCI:
             # creates self.chapters_num, self.chapters_char, self.bins
             self.icd9_to_cci = self._parse_file(self.filename)
 
+        def _map_single(self, icd9code : str) -> str:
+             return self.icd9_to_cci.get(icd9code)
+
 
         def map(self, icd9code : Union[str, Iterable]) -> Union[str, Iterable]:
-                """
-                Given an icd9 code, returns the corresponding Chronic classification
-                (True for chronic, and False for not-chronic)
+            """
+            Given an icd9 code, returns the corresponding Chronic classification
+            (True for chronic, and False for not-chronic)
 
-                Parameters
-                ----------
-                code : str or Iterable
-                    icd9 code or iterable of icd9 codes in string format.
+            Parameters
+            ----------
+            code : str or Iterable
+                icd9 code or iterable of icd9 codes in string format.
 
-                Returns
-                -------
-                True: When the code is chronic
-                False: when the code is not chronic
-                None: code is not recognizable
-                """
-                def map_single(icd9code : str):
-                    try:
-                        return self.icd9_to_cci[icd9code]
-                    except:
-                        return None
+            Returns
+            -------
+            True: When the code is chronic
+            False: when the code is not chronic
+            None: code is not recognizable
+            """
 
-                if isinstance(icd9code, str):
-                    return map_single(icd9code)
-                elif isinstance(icd9code, Iterable):
-                    return [map_single(c) for c in icd9code]
+            if isinstance(icd9code, str):
+                return self._map_single(icd9code)
+            elif isinstance(icd9code, Iterable):
+                return [self._map_single(c) for c in icd9code]
 
 
         def _parse_file(self, filename : str):

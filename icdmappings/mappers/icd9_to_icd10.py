@@ -24,7 +24,7 @@ class ICD9toICD10(MapperInterface):
             
         return self.icd9_to_icd10.get(icd9code)
 
-    def map(self, icd9code : Union[str, Iterable]):
+    def map(self, icd9code : Union[str, Iterable]) -> Union[str, Iterable]:
             """
             Given an icd9 code, returns the corresponding icd10 code.
 
@@ -43,9 +43,6 @@ class ICD9toICD10(MapperInterface):
             
             elif isinstance(icd9code, Iterable):
                 return [self._map_single(c) for c in icd9code]
-            
-            return None
-
 
     def _parse_file(self, filename : str):
 
