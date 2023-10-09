@@ -62,7 +62,7 @@ Supports mapping either a `single code` at a time, or an `iterable of codes` (ra
 
 # Feature requests
 
-Feel free to sugest feature requests under `Issues`, such as turning this into a script in case your pipeline does not use python.
+Feel free to request a new feature [here](https://github.com/snovaisg/ICD-Mappings/issues).
 
 
 # Acknowledgments
