@@ -1,5 +1,5 @@
 # ICDMappings
-This tool helps working with ICD codes. It maps between ICD versions (such as between ICD9 and ICD10). Also maps to other codings such as CCS (Computer Software Classification), and CCI (Chronic Condition Indicator).
+This tool helps working with ICD codes (International Classification of Diseases). It maps between ICD versions (such as between ICD9 and ICD10). Also maps to other codings such as CCS (Computer Software Classification), and CCI (Chronic Condition Indicator).
 
 # Installation
 
