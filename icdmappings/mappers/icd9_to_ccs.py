@@ -30,10 +30,8 @@ class ICD9toCCS(MapperInterface):
             return self._get_codes(content)
         
         def _map_single(self, icd9code : str):
-            try:
-                return self.icd9_to_ccs[icd9code]
-            except:
-                return None
+            
+            return self.icd9_to_ccs.get(icd9code)
 
         def map(self,
                 icd9code: Union[str, Iterable]
@@ -58,7 +56,8 @@ class ICD9toCCS(MapperInterface):
             
             elif isinstance(icd9code, Iterable):
                 return[self._map_single(code) for code in icd9code]
-            raise TypeError('Expects a string or iterable of strings as codes.')
+            
+            return None
 
         def _get_codes(self, content : str):
             """
