@@ -27,7 +27,7 @@ mapper.map(icd9codes, source='icd9', target='cci')
 >>> [True, False, None, True]
 
 # icd9 to icd10
-mapper.map(icd9codes, source='icd9', target='icd9toicd10')
+mapper.map(icd9codes, source='icd9', target='icd10')
 >>> ['F0280', 'R111000', None, 'H269']
 
 # You can also check available mappers
