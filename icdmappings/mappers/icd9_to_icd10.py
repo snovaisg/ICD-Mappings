@@ -11,7 +11,6 @@ class ICD9toICD10(MapperInterface):
     """
     Maps icd9 codes into icd10.
     
-    
     Source of mapping: https://www.nber.org/research/data/icd-9-cm-and-icd-10-cm-and-icd-10-pcs-crosswalk-or-general-equivalence-mappings
     """
     def __init__(self):
@@ -21,7 +20,11 @@ class ICD9toICD10(MapperInterface):
     def _setup(self):
         self.icd9_to_icd10 = self._parse_file(self.filename)
 
-    def map(self,icd9code : Union[str, Iterable]):
+    def _map_single(self, icd9code : str):
+            
+        return self.icd9_to_icd10.get(icd9code)
+
+    def map(self, icd9code : Union[str, Iterable]):
             """
             Given an icd9 code, returns the corresponding icd10 code.
 
@@ -34,18 +37,14 @@ class ICD9toICD10(MapperInterface):
             Returns:
                 icd10 code or None when the mapping is not possible
             """
-            def map_single(code : str):
-                try:
-                    return self.icd9_to_icd10[code]
-                except:
-                    return None
             
             if isinstance(icd9code, str):
-                return  map_single(icd9code)
-            elif isinstance(icd9code, Iterable):
-                return [ map_single(c) for c in icd9code ]
+                return  self._map_single(icd9code)
             
-            raise TypeError(f'Wrong input type. Expecting str or Iterable. Got {type(icd9code)}')
+            elif isinstance(icd9code, Iterable):
+                return [self._map_single(c) for c in icd9code]
+            
+            return None
 
 
     def _parse_file(self, filename : str):
