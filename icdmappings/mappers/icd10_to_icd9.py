@@ -21,15 +21,9 @@ class ICD10toICD9(MapperInterface):
 
 
     def _map_single(self, icd10code : str):
-            
-        try:
-            return self.icd10_to_icd9[icd10code]
-        except:
-            return None
+        return self.icd10_to_icd9.get(icd10code)
 
-    def map(self,
-            icd10code : Union[str, Iterable]
-            ):
+    def map(self, icd10code : Union[str, Iterable]) -> Union[str, Iterable]:
         """
         Given an icd10 code, returns the corresponding icd9 code.
 
@@ -40,16 +34,16 @@ class ICD10toICD9(MapperInterface):
             icd10 code
 
         Returns:
-            icd9 code or np.nan when the mapping is not possible
+            icd9 code or None when the mapping is not possible
         """
             
         if isinstance(icd10code, str):
             return self._map_single(icd10code)
 
         elif isinstance(icd10code, Iterable):
-            return [ self._map_single(c) for c in icd10code ]
+            return [self._map_single(c) for c in icd10code]
         
-        raise TypeError(f'Wrong input type. Expecting str or pd.Series. Got {type(icd10code)}')    
+        return None
 
 
     def _parse_file(self, filename : str):
