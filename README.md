@@ -18,7 +18,7 @@ icd9code = '29410'
 mapper.map(icd9code, source='icd9', target='ccs')
 >>> '653'
 
-# Can also map any Iterable of codes (list, numpy array, pandas Series, you name it)
+# Can map any Iterable of codes (list, numpy array, pandas Series, you name it)
 icd9codes = ['29410', '5362', 'NOT_A_CODE', '3669']
 
 mapper.map(icd9codes, source='icd9', target='ccs')
@@ -37,11 +37,11 @@ mapper.show_mappers()
 >>> Here are the available mappers
 >>>
 >>> From icd9 to:
->>>        - level3
->>>        - cci
->>>        - ccs
->>>        - chapter
 >>>        - icd10
+>>>        - ccs
+>>>        - cci
+>>>        - chapter
+>>>        - level3
 >>> From icd10 to:
 >>>        - icd9
 ```
