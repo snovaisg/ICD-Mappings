@@ -1,5 +1,5 @@
 # ICD-Mappings
-This tool enables a variaty of mappings between ICD codes (International Classification of Diseases) **with a single line of code**. 
+This tool enables a variety of mappings between ICD codes (International Classification of Diseases) **with a single line of code**. 
 
 It can map different ICD versions (such as between ICD9 and ICD10). Also maps to other codings such as CCS (Computer Software Classification), and classifies diagnostic codes into chronic or not with CCI (Chronic Condition Indicator).
 
