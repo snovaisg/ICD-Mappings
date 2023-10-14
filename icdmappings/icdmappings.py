@@ -8,17 +8,13 @@ class Mapper():
 
         # mappers
         self.icd9_to_cci = ICD9toCCI()
-        self.icd9level3_to_cci = ICD9Level3toCCI()
-        self.icd9_to_level3 = ICD9toLEVEL3()
         self.icd9_to_ccs = ICD9toCCS()
-        self.icd9level3_to_ccs = ICD9Level3toCCS()
         self.icd9_to_chapters = ICD9toChapters()
         self.icd9_to_icd10 = ICD9toICD10()
         self.icd10_to_icd9 = ICD10toICD9()
 
         self._internal_mapping = {
-                'icd9':{'level3':self.icd9_to_level3,
-                        'cci':self.icd9_to_cci,
+                'icd9':{'cci':self.icd9_to_cci,
                         'ccs':self.icd9_to_ccs,
                         'chapter':self.icd9_to_chapters,
                         'icd10':self.icd9_to_icd10
