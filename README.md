@@ -24,17 +24,16 @@ from icdmappings import Mapper
 
 mapper = Mapper()
 
-# Make sure your codes don't include '.' separators 
 icd9code = '29410' 
 mapper.map(icd9code, source='icd9', target='ccs')
 >>> '653'
 
-# Can map any Iterable of codes (list, numpy array, pandas Series, you name it)
+# you can pass any Iterable of codes (list, numpy array, pandas Series, you name it)
 icd9codes = ['29410', '5362', 'NOT_A_CODE', '3669']
 mapper.map(icd9codes, source='icd9', target='ccs')
 >>> ['653', '141', None, '86']
 
-# classify ICD-9 diagnostics into chronic or not-chronic
+# which of these diagnostics are chronic?
 mapper.map(icd9codes, source='icd9', target='cci')
 >>> [True, False, None, True]
 
@@ -42,7 +41,7 @@ mapper.map(icd9codes, source='icd9', target='cci')
 mapper.map(icd9codes, source='icd9', target='icd10')
 >>> ['F0280', 'R111000', None, 'H269']
 
-# You can also check available mappers
+# And many more... You can check all available mappers this way
 mapper.show_mappers()
 >>> Here are the available mappers
 >>>
