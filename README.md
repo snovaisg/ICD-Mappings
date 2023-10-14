@@ -55,7 +55,7 @@ mapper.show_mappers()
 
 # Feature requests
 
-Feel free to request a new feature [here](https://github.com/snovaisg/ICD-Mappings/issues).
+Feel free to request a new functionality or report a bug by creating a [new issue](https://github.com/snovaisg/ICD-Mappings/issues).
 
 
 # Acknowledgments
