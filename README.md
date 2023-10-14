@@ -1,5 +1,5 @@
 # ICD-Mappings
-This python tool enables a variety of mappings between ICD diagnostic codes (International Classification of Diseases) **with a single line of code**. 
+This python tool enables a variety of mappings of ICD codes (International Classification of Diseases) to different medical concepts **with a single line of code**. 
 
 # Supported Mappings
 
