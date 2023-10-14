@@ -11,6 +11,7 @@ From `ICD-9 CM` diagnostic codes to:
 
 From `ICD-10 CM` diagnostic codes to:
 - [ICD-9 CM](https://www.nber.org/research/data/icd-9-cm-and-icd-10-cm-and-icd-10-pcs-crosswalk-or-general-equivalence-mappings): International Classification of Diseases version 9 Clinical Modification
+- [ICD-10 CM Chapters](https://icd.who.int/browse10/2010/en): 22 Chapters of ICD-10 CM.
 
 # Installation
 
@@ -52,6 +53,7 @@ mapper.show_mappers()
 >>>        - chapter
 >>> From icd10 to:
 >>>        - icd9
+>>>        - chapter
 ```
 
 # Feature requests

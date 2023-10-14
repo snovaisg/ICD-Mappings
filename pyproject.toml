@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "icd-mappings"
-version = "0.3.1"
-description = "This python tools allows you to map ICD codes between versions (ICD9 <-> ICD10) and also to other coding schemas such as CCS (Clinical Classification Software) and CCI (Chronic Condition Indicator)"
+version = "0.3.3"
+description = "This python tool enables a variety of mappings between ICD diagnostic codes (International Classification of Diseases) with a single line of code."
 authors = ["Simao Novais <snovaisg.97@gmail.com>"]
 license = "MIT License"
 readme = "README.md"
