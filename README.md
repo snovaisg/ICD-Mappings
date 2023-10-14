@@ -43,8 +43,6 @@ mapper.map(icd9codes, source='icd9', target='icd10')
 
 # And many more... You can check all available mappers this way
 mapper.show_mappers()
->>> Here are the available mappers
->>>
 >>> From icd9 to:
 >>>        - icd10
 >>>        - ccs
