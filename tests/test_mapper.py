@@ -43,7 +43,7 @@ def test_mapper():
     assert expected_icd9dxvalidity == mapper.validate_diagnostics(icd9codes, 'icd9')
     assert expected_icd9procvalidity == mapper.validate_procedures(icd9codes, 'icd9')
 
-    # test icd10 mappings now
+    # test icd10 mappings to chapter
 
     expected_mappings = {'H05243':'7', 
                          'A0105': '1', 
@@ -61,6 +61,26 @@ def test_mapper():
     
     for code, expected in expected_mappings.items():
         result = mapper.map(code, source='icd10', target='chapter')
+        assert result == expected
+
+    # test icd10 mappings to ccsr
+
+    expected_mappings = {'H05243':'EYE008', 
+                         'A0105': 'INF003', 
+                         'B658': 'INF009', 
+                         'C8333': 'NEO058', 
+                         'D421': 'NEO072',
+                         'D4981': 'NEO072',
+                         'D528': 'BLD001', 
+                         'M84651K': 'MUS015',
+                         'L03114': 'SKN001', 
+                         'Not a code':None,
+                          62719: None,
+                         'T25519D': 'INJ056'
+                        }
+    
+    for code, expected in expected_mappings.items():
+        result = mapper.map(code, source='icd10', target='ccsr')
         assert result == expected
     
 
