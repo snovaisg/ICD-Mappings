@@ -5,9 +5,9 @@ This python tool enables a variety of mappings of ICD codes (International Class
 
 From `ICD-9 CM` diagnostic codes to:
 - [ICD-10 CM](https://www.nber.org/research/data/icd-9-cm-and-icd-10-cm-and-icd-10-pcs-crosswalk-or-general-equivalence-mappings): International Classification of Diseases version 10 Clinical Modification.
-- [CCS](https://hcup-us.ahrq.gov/toolssoftware/ccs/ccs.jsp): Clinical Classification Software. Has a universe of just 283 diagnostic categories.
+- [ICD-9 Chapters](https://icd.codes/icd9cm): 19 Chapters of ICD-9-CM.
+- [CCS](https://hcup-us.ahrq.gov/toolssoftware/ccs/ccs.jsp): Clinical Classification Software. All 14k ICD-9-CM diagnostic codes can be mapped into just 283 clinical categories.
 - [CCI](https://hcup-us.ahrq.gov/toolssoftware/chronic/chronic.jsp): Chronic Condition Indicator. True or False whether the diagnostic is chronic.
-- [ICD-9 Chapters](https://icd.codes/icd9cm): 19 Chapters of ICD-9 CM.
 
 From `ICD-10 CM` diagnostic codes to:
 - [ICD-9 CM](https://www.nber.org/research/data/icd-9-cm-and-icd-10-cm-and-icd-10-pcs-crosswalk-or-general-equivalence-mappings): International Classification of Diseases version 9 Clinical Modification
