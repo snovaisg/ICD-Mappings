@@ -47,9 +47,9 @@ mapper.map(icd9codes, source='icd9', target='icd10')
 mapper.show_mappers()
 >>> From icd9 to:
 >>>        - icd10
+>>>        - chapter
 >>>        - ccs
 >>>        - cci
->>>        - chapter
 >>> From icd10 to:
 >>>        - icd9
 >>>        - chapter
