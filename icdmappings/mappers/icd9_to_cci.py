@@ -7,7 +7,7 @@ from icdmappings import data_files
 
 class ICD9toCCI:
         """
-        Maps icd9 diagnostic codes to chronic or not chronic (that is the question).
+        Classifies ICD9 diagnostic codes into Chronic (True) or not Chronic (False).
         
         source of mapping: https://www.hcup-us.ahrq.gov/toolssoftware/chronic/chronic.jsp
         """

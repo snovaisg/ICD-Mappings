@@ -14,6 +14,7 @@ class Mapper():
         self.icd10_to_icd9 = ICD10toICD9()
         self.icd10_to_chapters = ICD10toChapters()
         self.icd10_to_ccsr = ICD10toCCSR()
+        self.icd10_to_ccir = ICD10toCCIR()
 
         self._internal_mapping = {
                 'icd9':{'cci':self.icd9_to_cci,
@@ -23,7 +24,8 @@ class Mapper():
                         },
                 'icd10':{'icd9':self.icd10_to_icd9,
                          'chapter':self.icd10_to_chapters,
-                         'ccsr':self.icd10_to_ccsr
+                         'ccsr':self.icd10_to_ccsr,
+                         'ccir': self.icd10_to_ccir
                          }
                         }
 

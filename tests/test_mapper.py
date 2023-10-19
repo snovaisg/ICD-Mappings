@@ -82,5 +82,25 @@ def test_mapper():
     for code, expected in expected_mappings.items():
         result = mapper.map(code, source='icd10', target='ccsr')
         assert result == expected
+
+    # test icd10 to ccir
+
+    expected_mappings = {'H05243':True, 
+                         'A0105': False, 
+                         'B658': False, 
+                         'C8333': True,
+                         'D421': True,
+                         'D4981': False,
+                         'D528': True, 
+                         'M84651K': False,
+                         'L03114': False, 
+                         'Not a code':None,
+                          62719: None,
+                         'T25519D': False
+                        }
+    
+    for code, expected in expected_mappings.items():
+        result = mapper.map(code, source='icd10', target='ccir')
+        assert result == expected
     
 
