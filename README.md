@@ -80,7 +80,7 @@ validator.validate(icd9codes, expects='icd9_diagnostic')
 
 # can also check procedure codes
 icd9codes = ['3582', '5731', 'NOT_A_CODE']
-validator.validate(icd9codes, expects='icd9_procedures')
+validator.validate(icd9codes, expects='icd9_procedure')
 >>> [True, True, False]
 
 # likewise for ICD10
