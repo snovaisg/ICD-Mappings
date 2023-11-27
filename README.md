@@ -23,7 +23,7 @@ From `ICD-10 CM` diagnostic codes to:
 Below are some examples on how to use this tool.
 
 ## Mapper
-This class allows you to map codes between ontologies.
+This class allows you to map between ontologies.
 
 ```python
 from icdmappings import Mapper
@@ -61,7 +61,7 @@ mapper.show_mappers()
 >>>        - ccir
 ```
 ## Validator
-This class helps you validate codes for a given ontology.
+This class helps you validate codes for a given ontology. Currently supports ICD9 and ICD10 codes.
 
 ```python
 
@@ -82,6 +82,12 @@ validator.validate(icd9codes, expects='icd9_diagnostic')
 icd9codes = ['3582', '5731', 'NOT_A_CODE']
 validator.validate(icd9codes, expects='icd9_procedures')
 >>> [True, True, False]
+
+# likewise for ICD10
+
+icd10code = 'B530'
+validator.validate(icd10code, expects='icd10_diagnostic')
+>>> True
 ```
 # Feature requests
 

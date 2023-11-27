@@ -44,3 +44,32 @@ def test_validator():
     assert [expected_a, expected_b, expected_c] == validator.validate([icd9_proc_a, icd9_proc_b, icd9_proc_c], expects='icd9_procedure')
         
 
+    # test icd10 validator
+
+    icd10_dx_a = 'B530'
+    expected_a = True
+
+    icd10_dx_b = '23'
+    expected_b = False
+
+    icd10_dx_c = 5679
+    expected_c = False # Must be string
+
+    assert expected_a == validator.validate(icd10_dx_a, expects='icd10_diagnostic')
+    assert expected_b == validator.validate(icd10_dx_b, expects='icd10_diagnostic')
+    assert expected_c == validator.validate(icd10_dx_c, expects='icd10_diagnostic')
+    assert [expected_a, expected_b, expected_c] == validator.validate([icd10_dx_a, icd10_dx_b, icd10_dx_c], expects='icd10_diagnostic')
+
+    icd10_proc_a = '00SH0ZZ'
+    expected_a = True
+
+    icd10_proc_b = '12'
+    expected_b = False
+
+    icd10_proc_c = 5679
+    expected_c = False # Must be string
+
+    assert expected_a == validator.validate(icd10_proc_a, expects='icd10_procedure')
+    assert expected_b == validator.validate(icd10_proc_b, expects='icd10_procedure')
+    assert expected_c == validator.validate(icd10_proc_c, expects='icd10_procedure')
+    assert [expected_a, expected_b, expected_c] == validator.validate([icd10_proc_a, icd10_proc_b, icd10_proc_c], expects='icd10_procedure')

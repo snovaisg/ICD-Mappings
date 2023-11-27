@@ -1,0 +1,3 @@
+Taken from cdc official [site](https://www.cdc.gov/nchs/icd/Comprehensive-Listing-of-ICD-10-CM-Files.htm). This is the 2024 official version of icd10-cm. "The FY2024 ICD-10-CM codes are to be used from October 1, 2023 through September 30, 2024. "
+
+This folder has has the 2024 icd-10 PCS (procedure) codes list. taken from [here](https://www.cms.gov/medicare/coding-billing/icd-10-codes/2024-icd-10-pcs)

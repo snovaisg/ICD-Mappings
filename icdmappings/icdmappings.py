@@ -1,5 +1,5 @@
 from .mappers import * 
-from .validators import ICD9Validator
+from .validators import *
 from collections.abc import Iterable
 from typing import Union
 class Mapper():
@@ -81,10 +81,13 @@ class Validator():
 
     def __init__(self):
         self.icd9_validator = ICD9Validator()
+        self.icd10_validator = ICD10Validator()
 
         self._internal_validators = {
             'icd9_diagnostic': (self.icd9_validator, 'diagnostic'),
-            'icd9_procedure': (self.icd9_validator, 'procedure')
+            'icd9_procedure': (self.icd9_validator, 'procedure'),
+            'icd10_diagnostic': (self.icd10_validator, 'diagnostic'),
+            'icd10_procedure': (self.icd10_validator, 'procedure')
         }
 
     def show_validators(self):
