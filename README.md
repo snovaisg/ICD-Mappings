@@ -20,6 +20,10 @@ From `ICD-10 CM` diagnostic codes to:
 `pip install icd-mappings`
 
 # Usage
+Below are some examples on how to use this tool.
+
+## Mapper
+This class allows you to map codes between ontologies.
 
 ```python
 from icdmappings import Mapper
@@ -56,7 +60,29 @@ mapper.show_mappers()
 >>>        - ccsr
 >>>        - ccir
 ```
+## Validator
+This class helps you validate codes for a given ontology.
 
+```python
+
+from icdmappings import Validator
+
+validator = Validator()
+
+icd9code = '3591'
+
+validator.validate(icd9code, expects='icd9_diagnostic')
+>>> True
+
+icd9codes = ['3591','NOT_A_CODE', '00321']
+validator.validate(icd9codes, expects='icd9_diagnostic')
+>>> [True, False, True]
+
+# can also check procedure codes
+icd9codes = ['3582', '5731', 'NOT_A_CODE']
+validator.validate(icd9codes, expects='icd9_procedures')
+>>> [True, True, False]
+```
 # Feature requests
 
 Feel free to request a new functionality or report a bug by creating a [new issue](https://github.com/snovaisg/ICD-Mappings/issues).
