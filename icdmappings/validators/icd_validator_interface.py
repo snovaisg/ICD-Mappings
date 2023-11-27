@@ -9,6 +9,8 @@ class ICDValidatorInterface(ABC):
 
     def __init__(self):
         pass
+
+    
     
     @abstractclassmethod
     def validate_diagnostics(self, 

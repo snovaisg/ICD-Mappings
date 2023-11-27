@@ -1,1 +1,1 @@
-from .icdmappings import Mapper,ICD9Validator
+from .icdmappings import Mapper,Validator

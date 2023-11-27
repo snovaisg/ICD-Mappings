@@ -9,7 +9,7 @@ from icdmappings.data_files import ICD_9_CM_v32_master_descriptions
 
 class ICD9Validator(ICDValidatorInterface):
         """
-        Checks if a code is icd9-cm version 32 compliant.
+        Validates if a code is icd9-cm version 32 compliant.
         """
         
         def __init__(self):
@@ -21,44 +21,57 @@ class ICD9Validator(ICDValidatorInterface):
             self.diagnostics = self._parse_file(self.diagnostics_filename)
             self.procedures = self._parse_file(self.procedures_filename)
             pass
-        
 
+        def _validate_single_diagnostic(self, code: str):
+            return code in self.diagnostics.keys()
+        
+        def _validate_single_procedure(self, code: str):
+            return code in self.procedures.keys()
+        
         def validate_diagnostics(self, 
-                                codes : Union[str,Iterable],
-                                ) -> Union[bool, Iterable]:
-            """validates if a code or iterable of codes are valid diagnostics.
-            If iterable is numpy or pd.Series, returns the same type. ALl other iterables are returned as List.
+                     code : Union[str,Iterable],
+                     ) -> Union[bool, Iterable]:
+            """Validates if a diagnostic code or iterable of diagnostic codes are valid.
+            If iterable is numpy or pd.Series, returns the same type. ALL other iterables are returned as List.
 
-            Args:
-                codes (str | List | pd.Series | np.ndarray): _description_
+            Parameters
+            ----------
+            code: str or Iterable
 
-            Raises:
-                ValueError: _description_
-
-            Returns:
-                bool | List | pd.Series | np.ndarray: _description_
+            Returns
+            -------
+            True when the code is a valid code
+            False when the code is not a valid code
             """
-            if codes is None:
-                return None
-            if isinstance(codes,str):
-                return codes in self.diagnostics.keys()
-            elif isinstance(codes,Iterable):
-                valid = [code in self.diagnostics.keys() if code is not None else None for code in codes]
-                return valid
-            raise TypeError('Expects a string or iterable of strings as codes.')
+
+            if isinstance(code, str):
+                return self._validate_single_diagnostic(code)
+            elif isinstance(code, Iterable):
+                return [self._validate_single_diagnostic(c) for c in code]
+            return False
         
-        def validate_procedures(self,
-                               codes : Union[str, Iterable],
-                              ) -> Union[bool, Iterable]:
-            
-            if codes is None:
-                return None
-            if isinstance(codes,str):
-                return codes in self.procedures.keys()
-            elif isinstance(codes,Iterable):
-                valid = [code in self.procedures.keys() if code is not None else None for code in codes]
-                return valid
-            raise TypeError('Expects a string or iterable of strings as codes.')
+        def validate_procedures(self, 
+                     code : Union[str,Iterable],
+                     ) -> Union[bool, Iterable]:
+            """Validates if a procedure code or iterable of procedure codes are valid.
+            If iterable is numpy or pd.Series, returns the same type. ALL other iterables are returned as List.
+
+            Parameters
+            ----------
+            code: str or Iterable
+
+            Returns
+            -------
+            True when the code is a valid code
+            False when the code is not a valid code
+            """
+
+            if isinstance(code, str):
+                return self._validate_single_procedure(code)
+            elif isinstance(code, Iterable):
+                return [self._validate_single_procedure(c) for c in code]
+            return False
+
 
         def _parse_file(self,filename : str):
             """Parses a data file of icd9 codes. and returns a dictionary of codes and descriptions.

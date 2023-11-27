@@ -17,31 +17,23 @@ def test_mapper():
     expected_icd10code = 'K659'
     expected_ccscode = '148'
     expected_chapter = '9'
-    expected_icd9dxvalidity = True
-    expected_icd9procvalidity = True
     expected_cci = False
 
     assert expected_icd10code == mapper.map(icd9code, source='icd9', target='icd10')
     assert expected_ccscode == mapper.map(icd9code, source='icd9', target='ccs')
     assert expected_cci == mapper.map(icd9code, source='icd9', target='cci')
     assert expected_chapter == mapper.map(icd9code, source='icd9', target='chapter')
-    assert expected_icd9dxvalidity == mapper.validate_diagnostics(icd9code, 'icd9')
-    assert expected_icd9procvalidity == mapper.validate_procedures(icd9code, 'icd9')
 
     icd9codes = ['5679', 235, '6010']
     expected_icd10codes = ['K659', None, 'N410']
     expected_ccscodes = ['148', None, '165']
     expected_chapters = ['9', None, '10']
-    expected_icd9dxvalidity = [True, False, True]
-    expected_icd9procvalidity = [True, False, False]
     expected_cci = [False, None, False]
 
     assert expected_icd10codes == mapper.map(icd9codes, source='icd9', target='icd10')
     assert expected_ccscodes == mapper.map(icd9codes, source='icd9', target='ccs')
     assert expected_cci == mapper.map(icd9codes, source='icd9', target='cci')
     assert expected_chapters == mapper.map(icd9codes, source='icd9', target='chapter')
-    assert expected_icd9dxvalidity == mapper.validate_diagnostics(icd9codes, 'icd9')
-    assert expected_icd9procvalidity == mapper.validate_procedures(icd9codes, 'icd9')
 
     # test icd10 mappings to chapter
 

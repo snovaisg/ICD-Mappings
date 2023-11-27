@@ -26,7 +26,7 @@ class ICD10toCCIR:
 
             Parameters
             ----------
-            code : str or Iterable
+            icd10code : str or Iterable
                 icd9 code or iterable of icd10 codes in string format.
 
             Returns

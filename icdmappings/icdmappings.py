@@ -29,23 +29,12 @@ class Mapper():
                          }
                         }
 
-        # validators
-
-        self.icd9_validator = ICD9Validator()
-
-        self._internal_validators = {
-            'icd9': self.icd9_validator
-        }
-
     def show_mappers(self):
         print('Here are the available mappers\n')
         for _from in self._internal_mapping:
             print('From ' + _from + ' to:')
             for _to in self._internal_mapping[_from]:
                 print('\t- ' + _to)
-    
-    def show_validators(self):
-        return list(self._internal_validators.keys())
     
     def validate_diagnostics(self, codes : Union[str,Iterable], category : str):
 
@@ -84,3 +73,30 @@ class Mapper():
         mapping = mapper.map(codes)
         
         return mapping
+
+class Validator():
+    """
+    This class is for validating codes.
+    """
+
+    def __init__(self):
+        self.icd9_validator = ICD9Validator()
+
+        self._internal_validators = {
+            'icd9_diagnostic': (self.icd9_validator, 'diagnostic'),
+            'icd9_procedure': (self.icd9_validator, 'procedure')
+        }
+
+    def show_validators(self):
+        return list(self._internal_validators.keys())
+    
+    def validate(self, codes : Union[str,Iterable], expects : str):
+
+        validator, _type = self._internal_validators.get(expects)
+
+        match _type:
+
+            case 'diagnostic':
+                return validator.validate_diagnostics(codes)
+            case 'procedure':
+                return validator.validate_procedures(codes)
