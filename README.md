@@ -20,7 +20,7 @@ From `ICD-10 CM` diagnostic codes to:
 `pip install icd-mappings`
 
 # Usage
-Below are some examples on how to use this tool.
+Below are some examples on how to use this tool for both the `Mapper` and `Validator` classes
 
 ## Mapper
 This class allows you to map between ontologies.
