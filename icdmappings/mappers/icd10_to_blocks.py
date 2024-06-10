@@ -51,7 +51,7 @@ class ICD10toBlocks(MapperInterface):
             for candidate_block in self.block_lookup[letter]:
                 # use python's bisect to check if number is within bounds
                 if num >= candidate_block['range'][0] and num <= candidate_block['range'][1]:
-                    return candidate_block['chapter']
+                    return candidate_block['block']
             
             return None
 
