@@ -38,6 +38,7 @@ class ICD10toBlocks(MapperInterface):
             
 
             letter = icd10code[0]
+
             if letter not in self.block_lookup:
                 return None
             
