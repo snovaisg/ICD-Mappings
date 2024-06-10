@@ -27,6 +27,8 @@
   "D00-D09": "In situ neoplasms",
   "D10-D36": "Benign neoplasms",
   "D37-D48": "Neoplasms of uncertain or unknown behaviour",
+  "D50-D53": "Nutritional anaemias",
+  "D55-D59": "Haemolytic anaemias",
   "D60-D64": "Aplastic and other anaemias",
   "D65-D69": "Coagulation defects, purpura and other haemorrhagic conditions",
   "D70-D77": "Other diseases of blood and blood-forming organs",
