@@ -3,7 +3,7 @@ from collections.abc import Iterable
 from .mapper_interface import MapperInterface
 import json
 import importlib.resources
-from icdmappings.data_files import ICD10_CM_BLOCKS
+from icdmappings.data_files import ICD10_CM_Blocks
 
 class ICD10toBlocks(MapperInterface):
         """
