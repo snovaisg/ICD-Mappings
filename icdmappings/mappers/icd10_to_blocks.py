@@ -12,7 +12,7 @@ class ICD10toBlocks(MapperInterface):
         source of mapping: https://icd.who.int/browse10/2010/en
         """
         def __init__(self):
-            self.filename = "icd10_block_lookup.json"
+            self.filename = "block_lookup.json"
             self._setup()
 
         def _setup(self):
