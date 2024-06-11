@@ -50,15 +50,16 @@ mapper.map(icd9codes, source='icd9', target='icd10')
 # And many more... You can check all available mappers this way
 mapper.show_mappers()
 >>> From icd9 to:
->>>        - icd10
->>>        - chapter
->>>        - ccs
->>>        - cci
+>>>         - cci
+>>>         - ccs
+>>>         - chapter
+>>>         - icd10
 >>> From icd10 to:
->>>        - icd9
->>>        - chapter
->>>        - ccsr
->>>        - ccir
+>>>         - icd9
+>>>         - block
+>>>         - chapter
+>>>         - ccsr
+>>>         - ccir
 ```
 ## Validator
 This class helps you validate codes for a given ontology. Currently supports ICD9 and ICD10 codes.
