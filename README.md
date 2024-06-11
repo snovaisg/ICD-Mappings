@@ -12,6 +12,7 @@ From `ICD-9 CM` diagnostic codes to:
 From `ICD-10 CM` diagnostic codes to:
 - [ICD-9 CM](https://www.nber.org/research/data/icd-9-cm-and-icd-10-cm-and-icd-10-pcs-crosswalk-or-general-equivalence-mappings): International Classification of Diseases version 9 Clinical Modification
 - [ICD-10 CM Chapters](https://icd.who.int/browse10/2010/en): 22 Chapters of ICD-10 CM.
+- [ICD-10 CM Blocks](https://icd.who.int/browse10/2010/en): ~130 Blocks of ICD-10 CM.
 - [CCS(R)](https://hcup-us.ahrq.gov/toolssoftware/ccsr/ccs_refined.jsp): Clinical Classification Software (Refined). All the 70k ICD-10-CM diagnostic codes can be mapped into just 530 clinical categories.
 - [CCI(R)](https://hcup-us.ahrq.gov/toolssoftware/chronic_icd10/chronic_icd10.jsp): Chronic Condition Indicator (Refined). True or False Whether the diagnostic is chronic.
 
