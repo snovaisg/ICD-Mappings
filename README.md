@@ -47,18 +47,28 @@ mapper.map(icd9codes, source='icd9', target='cci')
 mapper.map(icd9codes, source='icd9', target='icd10')
 >>> ['F0280', 'R111000', None, 'H269']
 
+# icd10 to chapters and blocks
+icd10codes = ['F0280', 'R111000', 'NOT_A_CODE', 'H269', 'H27.8']
+mapper.map(icd10codes, source='icd10', target='chapter')
+>>> ['5', '18', None, '7', '7']
+
+mapper.map(icd10codes, source='icd10', target='block')
+>>> ['F00-F09', 'R10-R19', None, 'H25-H28', 'H25-H28']
+
+
 # And many more... You can check all available mappers this way
 mapper.show_mappers()
 >>> From icd9 to:
->>>        - icd10
->>>        - chapter
->>>        - ccs
->>>        - cci
+>>>         - cci
+>>>         - ccs
+>>>         - chapter
+>>>         - icd10
 >>> From icd10 to:
->>>        - icd9
->>>        - chapter
->>>        - ccsr
->>>        - ccir
+>>>         - icd9
+>>>         - block
+>>>         - chapter
+>>>         - ccsr
+>>>         - ccir
 ```
 ## Validator
 This class helps you validate codes for a given ontology. Currently supports ICD9 and ICD10 codes.

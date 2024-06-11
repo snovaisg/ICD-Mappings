@@ -12,6 +12,7 @@ class Mapper():
         self.icd9_to_chapters = ICD9toChapters()
         self.icd9_to_icd10 = ICD9toICD10()
         self.icd10_to_icd9 = ICD10toICD9()
+        self.icd10_to_blocks = ICD10toBlocks()
         self.icd10_to_chapters = ICD10toChapters()
         self.icd10_to_ccsr = ICD10toCCSR()
         self.icd10_to_ccir = ICD10toCCIR()
@@ -23,6 +24,7 @@ class Mapper():
                         'icd10':self.icd9_to_icd10
                         },
                 'icd10':{'icd9':self.icd10_to_icd9,
+                         'block':self.icd10_to_blocks,
                          'chapter':self.icd10_to_chapters,
                          'ccsr':self.icd10_to_ccsr,
                          'ccir': self.icd10_to_ccir
