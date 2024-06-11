@@ -47,6 +47,15 @@ mapper.map(icd9codes, source='icd9', target='cci')
 mapper.map(icd9codes, source='icd9', target='icd10')
 >>> ['F0280', 'R111000', None, 'H269']
 
+# icd10 to chapters and blocks
+icd10codes = ['F0280', 'R111000', 'NOT_A_CODE', 'H269', 'H27.8']
+mapper.map(icd10codes, source='icd10', target='chapter')
+>>> ['5', '18', None, '7', '7']
+
+mapper.map(icd10codes, source='icd10', target='block')
+>>> ['F00-F09', 'R10-R19', None, 'H25-H28', 'H25-H28']
+
+
 # And many more... You can check all available mappers this way
 mapper.show_mappers()
 >>> From icd9 to:
