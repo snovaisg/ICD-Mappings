@@ -99,9 +99,7 @@ class Validator():
 
         validator, _type = self._internal_validators.get(expects)
 
-        match _type:
-
-            case 'diagnostic':
-                return validator.validate_diagnostics(codes)
-            case 'procedure':
-                return validator.validate_procedures(codes)
+        if _type == 'diagnostic':
+            return validator.validate_diagnostics(codes)
+        elif _type == 'procedure':
+            return validator.validate_procedures(codes)
