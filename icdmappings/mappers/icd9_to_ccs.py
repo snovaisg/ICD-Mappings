@@ -30,6 +30,8 @@ class ICD9toCCS(MapperInterface):
             return self._get_codes(content)
         
         def _map_single(self, icd9code : str) -> str:
+            if isinstance(icd9code, str):
+                icd9code = icd9code.replace('.', '')
             return self.icd9_to_ccs.get(icd9code)
 
         def map(self,icd9code: Union[str, Iterable]) -> Union[str, Iterable]:

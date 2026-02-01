@@ -35,7 +35,8 @@ class ICD10toBlocks(MapperInterface):
 
             if not isinstance(icd10code, str): # has to be string
                 return None
-            
+
+            icd10code = icd10code.replace('.', '')
 
             letter = icd10code[0]
 

@@ -42,3 +42,19 @@ def test_mapper():
     will_get = mapper.map("152")
     result = mapper.map(code)
     assert will_get == result
+
+    # Test codes with dots - should work after dot stripping
+    code = "535.2"
+    expected = "9"  # same as "5352"
+    result = mapper.map(code)
+    assert result == expected
+
+    code = "201.04"
+    expected = "2"  # same as "20104"
+    result = mapper.map(code)
+    assert result == expected
+
+    code = ["20104", "535.2", "201.04"]
+    expected = ["2", "9", "2"]  # dotted codes now map correctly
+    result = mapper.map(code)
+    assert result == expected
