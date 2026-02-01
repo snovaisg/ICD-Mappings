@@ -2,7 +2,7 @@ from .icd_validator_interface import ICDValidatorInterface
 from typing import List, Union
 import os
 from collections.abc import Iterable
-import importlib.resources
+import importlib_resources
 from icdmappings import data_files
 from icdmappings.data_files import ICD_9_CM_v32_master_descriptions
 
@@ -83,7 +83,7 @@ class ICD9Validator(ICDValidatorInterface):
                 data[code]: description
             """
             data = dict()
-            with importlib.resources.open_text(ICD_9_CM_v32_master_descriptions, filename,encoding='latin-1') as f:
+            with importlib_resources.files(ICD_9_CM_v32_master_descriptions).joinpath(filename).open(encoding='latin-1') as f:
                 for line in f:
                     code,desc = line.split(sep=' ', maxsplit=1)
                     data[code] = desc.strip()

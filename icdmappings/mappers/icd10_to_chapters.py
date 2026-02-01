@@ -2,7 +2,7 @@ from typing import Union
 from collections.abc import Iterable
 from .mapper_interface import MapperInterface
 import json
-import importlib.resources
+import importlib_resources
 from icdmappings import data_files
 from icdmappings.data_files import ICD10_CM_Chapters
 
@@ -89,7 +89,7 @@ class ICD10toChapters(MapperInterface):
             2. Create self.bins, which contains starting code ranges of each chapter
             """
 
-            with importlib.resources.open_text(ICD10_CM_Chapters, filename) as jsonfile:
+            with importlib_resources.files(ICD10_CM_Chapters).joinpath(filename).open() as jsonfile:
                 chapter_lookup = json.load(jsonfile)
 
             return chapter_lookup

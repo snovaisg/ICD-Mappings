@@ -3,7 +3,7 @@ from collections.abc import Iterable
 from .mapper_interface import MapperInterface
 import csv
 from typing import Union
-import importlib.resources
+import importlib_resources
 from icdmappings import data_files
 
 
@@ -48,7 +48,7 @@ class ICD9toICD10(MapperInterface):
 
         mapping = {}
 
-        with importlib.resources.open_text(data_files, filename) as csvfile:
+        with importlib_resources.files(data_files).joinpath(filename).open() as csvfile:
             reader = csv.reader(csvfile, quotechar='"')
             headers = next(reader)
 

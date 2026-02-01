@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12", "3.13"]
+        importlib-resources-version: ["5.12.0", "6.0.0", "6.1.0", "6.4.0"]
+        exclude:
+          # Python 3.13 requires importlib-resources >= 6.0
+          - python-version: "3.13"
+            importlib-resources-version: "5.12.0"
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          version: 1.7.1
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+
+      - name: Install dependencies
+        run: |
+          poetry install --no-interaction
+
+      - name: Override importlib-resources version
+        run: |
+          poetry run pip install importlib-resources==${{ matrix.importlib-resources-version }}
+
+      - name: Run tests
+        run: |
+          poetry run pytest -v

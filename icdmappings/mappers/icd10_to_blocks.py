@@ -2,7 +2,7 @@ from typing import Union
 from collections.abc import Iterable
 from .mapper_interface import MapperInterface
 import json
-import importlib.resources
+import importlib_resources
 from icdmappings.data_files import ICD10_CM_Blocks
 
 class ICD10toBlocks(MapperInterface):
@@ -88,7 +88,7 @@ class ICD10toBlocks(MapperInterface):
             2. Create self.bins, which contains starting code ranges of each block
             """
 
-            with importlib.resources.open_text(ICD10_CM_Blocks, filename) as jsonfile:
+            with importlib_resources.files(ICD10_CM_Blocks).joinpath(filename).open() as jsonfile:
                 block_lookup = json.load(jsonfile)
 
             return block_lookup
