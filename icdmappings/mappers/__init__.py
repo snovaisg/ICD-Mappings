@@ -8,6 +8,10 @@ from .icd10_to_blocks import ICD10toBlocks
 from .icd10_to_chapters import ICD10toChapters
 from .icd10_to_ccsr import ICD10toCCSR
 from .icd10_to_ccir import ICD10toCCIR
+from .icd9_to_ccc_category import ICD9toCCCCategory
+from .icd9_to_ccc_subcategory import ICD9toCCCSubcategory
+from .icd10_to_ccc_category import ICD10toCCCCategory
+from .icd10_to_ccc_subcategory import ICD10toCCCSubcategory
 
 
-__all__ = ["ICD9toCCS", "ICD9toChapters", "ICD9toCCI", "ICD9toICD10",  "ICD10toICD9", "ICD10toBlocks", "ICD10toChapters", "ICD10toCCSR", "ICD10toCCIR"]
+__all__ = ["ICD9toCCS", "ICD9toChapters", "ICD9toCCI", "ICD9toICD10", "ICD10toICD9", "ICD10toBlocks", "ICD10toChapters", "ICD10toCCSR", "ICD10toCCIR", "ICD9toCCCCategory", "ICD9toCCCSubcategory", "ICD10toCCCCategory", "ICD10toCCCSubcategory"]
