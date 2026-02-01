@@ -31,7 +31,18 @@ def test_mapper():
     result = mapper.map(code)
     assert result is expected
 
-    code = ["A0224",123, "A179", "", "812938"]
-    expected = ["00324", None, "01790", None, None]
+    # Test codes with dots - should work after dot stripping
+    code = "A02.24"
+    expected = "00324"  # same as "A0224"
+    result = mapper.map(code)
+    assert result == expected
+
+    code = "A1.79"
+    expected = "01790"  # same as "A179"
+    result = mapper.map(code)
+    assert result == expected
+
+    code = ["A0224", 123, "A179", "", "812938", "A02.24"]
+    expected = ["00324", None, "01790", None, None, "00324"]  # "A02.24" now maps correctly
     result = mapper.map(code)
     assert result == expected

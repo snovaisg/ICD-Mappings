@@ -43,7 +43,8 @@ class ICD10toCCSR(MapperInterface):
 
             if not isinstance(icd10code, str): # has to be string
                 return None
-            
+
+            icd10code = icd10code.replace('.', '')
             return self.ccsr_lookup.get(icd10code)
 
 

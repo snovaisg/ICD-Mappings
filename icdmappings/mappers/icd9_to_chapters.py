@@ -40,7 +40,9 @@ class ICD9toChapters(MapperInterface):
 
             if not isinstance(icd9code, str): # has to be string
                 return None
-            
+
+            icd9code = icd9code.replace('.', '')
+
             if icd9code[0] in ['E','V']:
                 return self.char_mapping[icd9code[0]]
             else: # numerical code

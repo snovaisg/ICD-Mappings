@@ -16,7 +16,9 @@ class ICD10toCCIR:
             self.icd10_to_ccir = self._parse_file(self.filename) # {icd10code:cci,...icd10code:cci}
 
         def _map_single(self, icd10code : str) -> str:
-             return self.icd10_to_ccir.get(icd10code)
+            if isinstance(icd10code, str):
+                icd10code = icd10code.replace('.', '')
+            return self.icd10_to_ccir.get(icd10code)
 
 
         def map(self, icd10code : Union[str, Iterable]) -> Union[str, Iterable]:

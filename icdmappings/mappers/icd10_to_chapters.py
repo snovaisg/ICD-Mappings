@@ -36,7 +36,8 @@ class ICD10toChapters(MapperInterface):
 
             if not isinstance(icd10code, str): # has to be string
                 return None
-            
+
+            icd10code = icd10code.replace('.', '')
 
             letter = icd10code[0]
             if letter not in self.chapter_lookup:

@@ -21,6 +21,8 @@ class ICD10toICD9(MapperInterface):
 
 
     def _map_single(self, icd10code : str):
+        if isinstance(icd10code, str):
+            icd10code = icd10code.replace('.', '')
         return self.icd10_to_icd9.get(icd10code)
 
     def map(self, icd10code : Union[str, Iterable]) -> Union[str, Iterable]:
