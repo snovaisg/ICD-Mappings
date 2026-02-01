@@ -2,7 +2,7 @@ from typing import List, Union
 import os
 from collections.abc import Iterable
 import csv
-import importlib.resources
+import importlib_resources
 from icdmappings import data_files
 
 class ICD10toCCIR:
@@ -43,7 +43,7 @@ class ICD10toCCIR:
 
 
         def _parse_file(self, filename : str):
-            with importlib.resources.open_text(data_files, filename) as csvfile:
+            with importlib_resources.files(data_files).joinpath(filename).open() as csvfile:
                 reader = csv.reader(csvfile, quotechar="'")
                 headers = next(reader)
                 more_headers = next(reader)

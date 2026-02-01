@@ -2,7 +2,7 @@ from .icd_validator_interface import ICDValidatorInterface
 from typing import List, Union
 import os
 from collections.abc import Iterable
-import importlib.resources
+import importlib_resources
 from icdmappings import data_files
 from icdmappings.data_files import ICD_10_CM_2024_release
 
@@ -88,15 +88,15 @@ class ICD10Validator(ICDValidatorInterface):
             """
 
             diagnostics_data = dict()
-            with importlib.resources.open_text(ICD_10_CM_2024_release, filename_diagnostics, encoding='latin-1') as f:
+            with importlib_resources.files(ICD_10_CM_2024_release).joinpath(filename_diagnostics).open(encoding='latin-1') as f:
                 for line in f:
                     tokens = line.split(sep=' ')
                     code = tokens[0]
                     desc = ' '.join(tokens[1:])
                     diagnostics_data[code] = desc.strip()
-            
+
             procedures_data = dict()
-            with importlib.resources.open_text(ICD_10_CM_2024_release, filename_procedures, encoding='latin-1') as f:
+            with importlib_resources.files(ICD_10_CM_2024_release).joinpath(filename_procedures).open(encoding='latin-1') as f:
                 for line in f:
                     tokens = line.split(sep=' ')
                     code = tokens[0]

@@ -2,7 +2,7 @@ from typing import Union
 from collections.abc import Iterable
 from .mapper_interface import MapperInterface
 import json
-import importlib.resources
+import importlib_resources
 from icdmappings.data_files import ICD10_CM_CCSR
 
 class ICD10toCCSR(MapperInterface):
@@ -79,7 +79,7 @@ class ICD10toCCSR(MapperInterface):
             2. Create self.bins, which contains starting code ranges of each chapter
             """
 
-            with importlib.resources.open_text(ICD10_CM_CCSR, filename) as jsonfile:
+            with importlib_resources.files(ICD10_CM_CCSR).joinpath(filename).open() as jsonfile:
                 ccsr_lookup = json.load(jsonfile)
 
             return ccsr_lookup
