@@ -16,18 +16,26 @@ class Mapper():
         self.icd10_to_chapters = ICD10toChapters()
         self.icd10_to_ccsr = ICD10toCCSR()
         self.icd10_to_ccir = ICD10toCCIR()
+        self.icd9_to_ccc_category = ICD9toCCCCategory()
+        self.icd9_to_ccc_subcategory = ICD9toCCCSubcategory()
+        self.icd10_to_ccc_category = ICD10toCCCCategory()
+        self.icd10_to_ccc_subcategory = ICD10toCCCSubcategory()
 
         self._internal_mapping = {
                 'icd9':{'cci':self.icd9_to_cci,
                         'ccs':self.icd9_to_ccs,
                         'chapter':self.icd9_to_chapters,
-                        'icd10':self.icd9_to_icd10
+                        'icd10':self.icd9_to_icd10,
+                        'ccc_category':self.icd9_to_ccc_category,
+                        'ccc_subcategory':self.icd9_to_ccc_subcategory
                         },
                 'icd10':{'icd9':self.icd10_to_icd9,
                          'block':self.icd10_to_blocks,
                          'chapter':self.icd10_to_chapters,
                          'ccsr':self.icd10_to_ccsr,
-                         'ccir': self.icd10_to_ccir
+                         'ccir': self.icd10_to_ccir,
+                         'ccc_category':self.icd10_to_ccc_category,
+                         'ccc_subcategory':self.icd10_to_ccc_subcategory
                          }
                         }
 

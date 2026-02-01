@@ -8,6 +8,8 @@ From `ICD-9 CM` diagnostic codes to:
 - [ICD-9 Chapters](https://icd.codes/icd9cm): 19 Chapters of ICD-9-CM.
 - [CCS](https://hcup-us.ahrq.gov/toolssoftware/ccs/ccs.jsp): Clinical Classification Software. All 14k ICD-9-CM diagnostic codes can be mapped into just 283 clinical categories.
 - [CCI](https://hcup-us.ahrq.gov/toolssoftware/chronic/chronic.jsp): Chronic Condition Indicator. True or False whether the diagnostic is chronic.
+- [CCC Category](https://www.childrenshospitals.org/content/analytics/toolkit/complex-chronic-conditions): Pediatric Complex Chronic Conditions Classification System v3 - Category (15 categories).
+- [CCC Subcategory](https://www.childrenshospitals.org/content/analytics/toolkit/complex-chronic-conditions): Pediatric Complex Chronic Conditions Classification System v3 - Subcategory (64 subcategories).
 
 From `ICD-10 CM` diagnostic codes to:
 - [ICD-9 CM](https://www.nber.org/research/data/icd-9-cm-and-icd-10-cm-and-icd-10-pcs-crosswalk-or-general-equivalence-mappings): International Classification of Diseases version 9 Clinical Modification
@@ -15,6 +17,8 @@ From `ICD-10 CM` diagnostic codes to:
 - [ICD-10 CM Blocks](https://icd.who.int/browse10/2010/en): ~130 Blocks of ICD-10 CM.
 - [CCS(R)](https://hcup-us.ahrq.gov/toolssoftware/ccsr/ccs_refined.jsp): Clinical Classification Software (Refined). All the 70k ICD-10-CM diagnostic codes can be mapped into just 530 clinical categories.
 - [CCI(R)](https://hcup-us.ahrq.gov/toolssoftware/chronic_icd10/chronic_icd10.jsp): Chronic Condition Indicator (Refined). True or False Whether the diagnostic is chronic.
+- [CCC Category](https://www.childrenshospitals.org/content/analytics/toolkit/complex-chronic-conditions): Pediatric Complex Chronic Conditions Classification System v3 - Category (15 categories).
+- [CCC Subcategory](https://www.childrenshospitals.org/content/analytics/toolkit/complex-chronic-conditions): Pediatric Complex Chronic Conditions Classification System v3 - Subcategory (64 subcategories).
 
 # Installation
 
@@ -57,6 +61,14 @@ mapper.map(icd10codes, source='icd10', target='block')
 >>> ['F00-F09', 'R10-R19', None, 'H25-H28', 'H25-H28']
 
 
+# Pediatric Complex Chronic Conditions (CCC)
+icd9codes = ['135', '179', '243']
+mapper.map(icd9codes, source='icd9', target='ccc_category')
+>>> ['hemato_immu', 'malignancy', 'metabolic']
+
+mapper.map(icd9codes, source='icd9', target='ccc_subcategory')
+>>> ['Sarcoidosis', 'Neoplasms', 'Endocrine disorders']
+
 # And many more... You can check all available mappers this way
 mapper.show_mappers()
 >>> From icd9 to:
@@ -64,12 +76,16 @@ mapper.show_mappers()
 >>>         - ccs
 >>>         - chapter
 >>>         - icd10
+>>>         - ccc_category
+>>>         - ccc_subcategory
 >>> From icd10 to:
 >>>         - icd9
 >>>         - block
 >>>         - chapter
 >>>         - ccsr
 >>>         - ccir
+>>>         - ccc_category
+>>>         - ccc_subcategory
 ```
 ## Validator
 This class helps you validate codes for a given ontology. Currently supports ICD9 and ICD10 codes.
