@@ -123,7 +123,7 @@ validator.validate(icd10code, expects='icd10_diagnostic')
 ```
 # Feature requests
 
-Feel free to request a new functionality or report a bug by creating a [new issue](https://github.com/snovaisg/ICD-Mappings/issues).
+Feel free to request a new functionality or report a bug by creating a [new issue](https://github.com/snovaisg/ICD-Mappings/issues/new).
 
 
 # Acknowledgments
