@@ -128,4 +128,4 @@ Feel free to request a new functionality or report a bug by creating a [new issu
 
 # Acknowledgments
 
-[Tekaichi](https://github.com/Tekaichi) for building the initial version of the icd9->ccs pipeline
+[Miguel Cardoso](https://github.com/msdbcardoso) for building the initial version of the icd9->ccs pipeline
