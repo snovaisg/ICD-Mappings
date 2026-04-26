@@ -23,10 +23,17 @@ class ICD10Validator(ICDValidatorInterface):
             self.diagnostics = result['diagnostics']
             self.procedures = result['procedures']
 
+        def _normalize_code(self, code):
+            if isinstance(code, str):
+                return code.replace('.', '')
+            return code
+
         def _validate_single_diagnostic(self, code: str):
+            code = self._normalize_code(code)
             return code in self.diagnostics.keys()
         
         def _validate_single_procedure(self, code: str):
+            code = self._normalize_code(code)
             return code in self.procedures.keys()
         
         def validate_diagnostics(self, 

@@ -25,6 +25,7 @@ def test_validator():
     expected_c = False # Must be string
 
     assert expected_a == validator.validate(icd9_dx_a, expects='icd9_diagnostic')
+    assert expected_a == validator.validate('567.9', expects='icd9_diagnostic')
     assert expected_b == validator.validate(icd9_dx_b, expects='icd9_diagnostic')
     assert expected_c == validator.validate(icd9_dx_c, expects='icd9_diagnostic')
     assert [expected_a, expected_b, expected_c] == validator.validate([icd9_dx_a, icd9_dx_b, icd9_dx_c], expects='icd9_diagnostic')
@@ -56,6 +57,7 @@ def test_validator():
     expected_c = False # Must be string
 
     assert expected_a == validator.validate(icd10_dx_a, expects='icd10_diagnostic')
+    assert expected_a == validator.validate('B53.0', expects='icd10_diagnostic')
     assert expected_b == validator.validate(icd10_dx_b, expects='icd10_diagnostic')
     assert expected_c == validator.validate(icd10_dx_c, expects='icd10_diagnostic')
     assert [expected_a, expected_b, expected_c] == validator.validate([icd10_dx_a, icd10_dx_b, icd10_dx_c], expects='icd10_diagnostic')
