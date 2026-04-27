@@ -14,7 +14,7 @@ From `ICD-9 CM` diagnostic codes to:
 - [ICD-10 CM](https://www.nber.org/research/data/icd-9-cm-and-icd-10-cm-and-icd-10-pcs-crosswalk-or-general-equivalence-mappings): International Classification of Diseases version 10 Clinical Modification.
 - [ICD-9 Chapters](https://icd.codes/icd9cm): 19 Chapters of ICD-9-CM.
 - [CCS](https://hcup-us.ahrq.gov/toolssoftware/ccs/ccs.jsp): Clinical Classification Software. All 14k ICD-9-CM diagnostic codes can be mapped into just 283 clinical categories.
-- [CCI](https://hcup-us.ahrq.gov/toolssoftware/chronic/chronic.jsp): Chronic Condition Indicator. True or False whether the diagnostic is chronic.
+- [CCI](https://hcup-us.ahrq.gov/toolssoftware/chronic/chronic.jsp): Chronic Condition Indicator. True or False whether the diagnostic is chronic; parent-code inference is enabled by default for `target='cci'` and can be disabled with `allow_parent_inference=False`.
 - [CCC Category](https://www.childrenshospitals.org/content/analytics/toolkit/complex-chronic-conditions): Pediatric Complex Chronic Conditions Classification System v3 - Category (15 categories).
 - [CCC Subcategory](https://www.childrenshospitals.org/content/analytics/toolkit/complex-chronic-conditions): Pediatric Complex Chronic Conditions Classification System v3 - Subcategory (64 subcategories).
 
@@ -23,7 +23,7 @@ From `ICD-10 CM` diagnostic codes to:
 - [ICD-10 CM Chapters](https://www.aapc.com/codes/icd-10-codes-range/): 22 Chapters of ICD-10 CM. Extraction date `2026-04-27`
 - [ICD-10 CM Blocks](https://www.aapc.com/codes/icd-10-codes-range/): 226 Blocks of ICD-10 CM. Extraction date `2026-04-27`
 - [CCS(R)](https://hcup-us.ahrq.gov/toolssoftware/ccsr/ccs_refined.jsp): Clinical Classification Software (Refined). All the 70k ICD-10-CM diagnostic codes can be mapped into just 530 clinical categories.
-- [CCI(R)](https://hcup-us.ahrq.gov/toolssoftware/chronic_icd10/chronic_icd10.jsp): Chronic Condition Indicator (Refined). True or False Whether the diagnostic is chronic.
+- [CCI(R)](https://hcup-us.ahrq.gov/toolssoftware/chronic_icd10/chronic_icd10.jsp): Chronic Condition Indicator (Refined). True or False whether the diagnostic is chronic; parent-code inference is enabled by default for `target='ccir'` and can be disabled with `allow_parent_inference=False`.
 - [CCC Category](https://www.childrenshospitals.org/content/analytics/toolkit/complex-chronic-conditions): Pediatric Complex Chronic Conditions Classification System v3 - Category (15 categories).
 - [CCC Subcategory](https://www.childrenshospitals.org/content/analytics/toolkit/complex-chronic-conditions): Pediatric Complex Chronic Conditions Classification System v3 - Subcategory (64 subcategories).
 
@@ -55,6 +55,14 @@ mapper.map(icd9codes, source='icd9', target='ccs')
 mapper.map(icd9codes, source='icd9', target='cci')
 >>> [True, False, None, True]
 
+# For CCI, allow_parent_inference is True by default and maps truncated parent codes only when all mapped children agree.
+mapper.map('567', source='icd9', target='cci')
+>>> False
+
+# You can explicitly disable parent-code inference.
+mapper.map('567', source='icd9', target='cci', allow_parent_inference=False)
+>>> None
+
 # icd9 to icd10
 mapper.map(icd9codes, source='icd9', target='icd10')
 >>> ['F0280', 'R111000', None, 'H269']
@@ -66,6 +74,14 @@ mapper.map(icd10codes, source='icd10', target='chapter')
 
 mapper.map(icd10codes, source='icd10', target='block')
 >>> ['F00-F09', 'R10-R19', None, 'H25-H28', 'H25-H28']
+
+# allow_parent_inference is True by default for CCIR and maps truncated parent codes only when all mapped children agree.
+mapper.map('H81.0', source='icd10', target='ccir')
+>>> True
+
+# You can explicitly disable parent-code inference.
+mapper.map('H81.0', source='icd10', target='ccir', allow_parent_inference=False)
+>>> None
 
 
 # Pediatric Complex Chronic Conditions (CCC)

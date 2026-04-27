@@ -68,7 +68,16 @@ class Mapper():
     def map(self, 
             codes : Union[str, Iterable],
             source : str,
-            target : str):
+            target : str,
+            allow_parent_inference : bool = True):
+        """
+        Maps code(s) from one coding system to another.
+        codes: Single code string or iterable of codes to be mapped.
+        source: Source coding system key (for example "icd9" or "icd10").
+        target: Target mapping key supported for the given source.
+        allow_parent_inference: Enables CCI/CCIR parent fallback for truncated ICD-9/10 diagnostic codes (enabled by default).
+        Example: Useful when mapping "H81.0" (ICD-10) or "567" (ICD-9) without needing a full billable child code.
+        """
     
         _source = self._internal_mapping.get(source)
     
@@ -80,7 +89,12 @@ class Mapper():
         if mapper is None:
             raise ValueError(f'There\'s no mapper that maps from {source} to {target}. Available mappers can only map from {source} to {str(list(_source.keys()))}. Use .show_mappers() for more info.')
         
-        mapping = mapper.map(codes)
+        if source == 'icd10' and target == 'ccir':
+            mapping = mapper.map(codes, allow_parent_inference=allow_parent_inference)
+        elif source == 'icd9' and target == 'cci':
+            mapping = mapper.map(codes, allow_parent_inference=allow_parent_inference)
+        else:
+            mapping = mapper.map(codes)
         
         return mapping
 

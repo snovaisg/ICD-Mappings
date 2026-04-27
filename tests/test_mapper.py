@@ -34,6 +34,9 @@ def test_mapper():
     assert expected_ccscodes == mapper.map(icd9codes, source='icd9', target='ccs')
     assert expected_cci == mapper.map(icd9codes, source='icd9', target='cci')
     assert expected_chapters == mapper.map(icd9codes, source='icd9', target='chapter')
+    assert mapper.map('567', source='icd9', target='cci') is False
+    assert mapper.map('567', source='icd9', target='cci', allow_parent_inference=False) is None
+    assert mapper.map('054', source='icd9', target='cci') is None
 
     # test icd10 mappings to chapter
 
@@ -94,4 +97,12 @@ def test_mapper():
     for code, expected in expected_mappings.items():
         result = mapper.map(code, source='icd10', target='ccir')
         assert result == expected
+
+    assert mapper.map('H81.0', source='icd10', target='ccir') is True
+    assert mapper.map('H81.0', source='icd10', target='ccir', allow_parent_inference=False) is None
+    assert mapper.map('H81.0', source='icd10', target='ccir', allow_parent_inference=True) is True
+    assert mapper.map('N90.8', source='icd10', target='ccir', allow_parent_inference=True) is None
+    assert mapper.map('M75', source='icd10', target='ccir', allow_parent_inference=True) is False
+    assert mapper.map('Z283', source='icd10', target='ccir', allow_parent_inference=True) is None
+    assert mapper.map(['H81.0', 'N90.8', 'M75'], source='icd10', target='ccir', allow_parent_inference=True) == [True, None, False]
     
