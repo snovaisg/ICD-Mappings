@@ -6,6 +6,8 @@
 
 This python tool enables a variety of mappings of ICD codes (International Classification of Diseases) to different medical concepts **with a single line of code**. 
 
+Latest data refresh: ICD-10 chapter and block mappings were fetched from the latest available code ranges on `2026-04-27`.
+
 # Supported Mappings
 
 From `ICD-9 CM` diagnostic codes to:
@@ -18,8 +20,8 @@ From `ICD-9 CM` diagnostic codes to:
 
 From `ICD-10 CM` diagnostic codes to:
 - [ICD-9 CM](https://www.nber.org/research/data/icd-9-cm-and-icd-10-cm-and-icd-10-pcs-crosswalk-or-general-equivalence-mappings): International Classification of Diseases version 9 Clinical Modification
-- [ICD-10 CM Chapters](https://icd.who.int/browse10/2010/en): 22 Chapters of ICD-10 CM.
-- [ICD-10 CM Blocks](https://icd.who.int/browse10/2010/en): ~130 Blocks of ICD-10 CM.
+- [ICD-10 CM Chapters](https://www.aapc.com/codes/icd-10-codes-range/): 22 Chapters of ICD-10 CM. Extraction date `2026-04-27`
+- [ICD-10 CM Blocks](https://www.aapc.com/codes/icd-10-codes-range/): 226 Blocks of ICD-10 CM. Extraction date `2026-04-27`
 - [CCS(R)](https://hcup-us.ahrq.gov/toolssoftware/ccsr/ccs_refined.jsp): Clinical Classification Software (Refined). All the 70k ICD-10-CM diagnostic codes can be mapped into just 530 clinical categories.
 - [CCI(R)](https://hcup-us.ahrq.gov/toolssoftware/chronic_icd10/chronic_icd10.jsp): Chronic Condition Indicator (Refined). True or False Whether the diagnostic is chronic.
 - [CCC Category](https://www.childrenshospitals.org/content/analytics/toolkit/complex-chronic-conditions): Pediatric Complex Chronic Conditions Classification System v3 - Category (15 categories).
