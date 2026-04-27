@@ -1,8 +1,8 @@
 # ICD-Mappings
 
-[![CI](https://github.com/snovaisg/ICD-Mappings/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/snovaisg/ICD-Mappings/actions/workflows/ci.yml)
+[![CI](https://github.com/snovaisg/ICD-Mappings/actions/workflows/ci.yml/badge.svg?event=push)](https://github.com/snovaisg/ICD-Mappings/actions/workflows/ci.yml)
 [![Downloads](https://pepy.tech/badge/icd-mappings)](https://pepy.tech/project/icd-mappings)
-![PyPI](https://img.shields.io/pypi/v/icd-mappings)
+![PyPI](https://img.shields.io/pypi/v/icd-mappings?cacheSeconds=300)
 ![Supported python versions](https://img.shields.io/pypi/pyversions/icd-mappings)
 
 This python tool enables a variety of mappings of ICD codes (International Classification of Diseases) to different medical concepts **with a single line of code**. 
