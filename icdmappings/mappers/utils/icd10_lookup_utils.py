@@ -1,6 +1,8 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
 from string import ascii_uppercase
-from typing import NamedTuple, TypeAlias
+from typing import Dict, List, NamedTuple
 
 
 class ICD10Range(NamedTuple):
@@ -11,8 +13,8 @@ class ICD10Range(NamedTuple):
     bucket: str
 
 
-ICD10FirstLetter: TypeAlias = str
-ICD10LookupTable: TypeAlias = dict[ICD10FirstLetter, list[ICD10Range]]
+ICD10FirstLetter = str
+ICD10LookupTable = Dict[ICD10FirstLetter, List[ICD10Range]]
 # Example: {"D": [ICD10Range(0, 49, "C00-D49 | Neoplasms"), 
 #                 ICD10Range(50, 89, "D50-D89 | Diseases of the blood...")
 #                 ], ...}
