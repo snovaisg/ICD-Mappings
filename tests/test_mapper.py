@@ -37,18 +37,18 @@ def test_mapper():
 
     # test icd10 mappings to chapter
 
-    expected_mappings = {'H05243':'7', 
-                         'A0105': '1', 
-                         'B658': '1', 
-                         'C8333': '2', 
-                         'D421': '2',
-                         'D4981': None, # valid code but there's no mapping for it
-                         'D528': '3', 
-                         'M84651K': '13',
-                         'L03114': '12', 
+    expected_mappings = {'H05243':'H00-H59 | Diseases of the eye and adnexa', 
+                         'A0105': 'A00-B99 | Certain infectious and parasitic diseases', 
+                         'B658': 'A00-B99 | Certain infectious and parasitic diseases', 
+                         'C8333': 'C00-D49 | Neoplasms', 
+                         'D421': 'C00-D49 | Neoplasms',
+                         'D4981': 'C00-D49 | Neoplasms',
+                         'D528': 'D50-D89 | Diseases of the blood and blood-forming organs and certain disorders involving the immune mechanism', 
+                         'M84651K': 'M00-M99 | Diseases of the musculoskeletal system and connective tissue',
+                         'L03114': 'L00-L99 | Diseases of the skin and subcutaneous tissue', 
                          'Not a code':None,
                           62719: None,
-                         'T25519D': '19'
+                         'T25519D': 'S00-T88 | Injury, poisoning and certain other consequences of external causes'
                         }
     
     for code, expected in expected_mappings.items():
@@ -95,4 +95,3 @@ def test_mapper():
         result = mapper.map(code, source='icd10', target='ccir')
         assert result == expected
     
-
