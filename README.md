@@ -1,5 +1,6 @@
 # ICD-Mappings
 
+[![CI](https://github.com/snovaisg/ICD-Mappings/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/snovaisg/ICD-Mappings/actions/workflows/ci.yml)
 [![Downloads](https://pepy.tech/badge/icd-mappings)](https://pepy.tech/project/icd-mappings)
 ![PyPI](https://img.shields.io/pypi/v/icd-mappings)
 ![Supported python versions](https://img.shields.io/pypi/pyversions/icd-mappings)
