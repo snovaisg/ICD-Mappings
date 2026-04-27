@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12", "3.13"]
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12", "3.13", "3.14"]
         importlib-resources-version: ["5.12.0", "6.0.0", "6.1.0", "6.4.0"]
         exclude:
           # Python 3.13 requires importlib-resources >= 6.0
@@ -41,6 +41,10 @@ jobs:
       - name: Override importlib-resources version
         run: |
           poetry run pip install importlib-resources==${{ matrix.importlib-resources-version }}
+
+      - name: Import smoke test
+        run: |
+          poetry run python -c "import icdmappings"
 
       - name: Run tests
         run: |
