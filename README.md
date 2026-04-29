@@ -7,8 +7,6 @@
 
 This python tool enables a variety of mappings of ICD codes (International Classification of Diseases) to different medical concepts **with a single line of code**. 
 
-Latest data refresh: ICD-10 chapter and block mappings were fetched from the latest available code ranges on `2026-04-27`.
-
 # Supported Mappings
 
 From `ICD-9 CM` diagnostic codes to:
@@ -56,7 +54,7 @@ mapper.map(icd9codes, source='icd9', target='ccs')
 mapper.map(icd9codes, source='icd9', target='cci')
 >>> [True, False, None, True]
 
-# For CCI, allow_parent_inference is True by default and maps truncated parent codes only when all mapped children agree.
+# For CCI, allow_parent_inference is True by default and maps this classification for parent codes - only when all mapped children agree.
 mapper.map('567', source='icd9', target='cci')
 >>> False
 
