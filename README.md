@@ -146,7 +146,3 @@ Feel free to request a new functionality or report a bug by creating a [new issu
 # Acknowledgments
 
 [Miguel Cardoso](https://github.com/msdbcardoso) for building the initial version of the icd9->ccs pipeline
-
-# Supporting the Project
-
-If this tool adds value to your use case, give it a star in its [github page](https://github.com/snovaisg/ICD-Mappings). Also, feedback is welcome in the [issues page](https://github.com/snovaisg/ICD-Mappings/issues).
